@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/pydevd.py", line 1483, in _exec
+    pydev_imports.execfile(file, globals, locals)  # execute the script
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 114, in <module>
+    run_best(opt)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 58, in run_best
+    yaml_path = f"./wandb/sweep-{opt['sweep']}/config-{opt['run']}.yaml"
+KeyError: 'run'

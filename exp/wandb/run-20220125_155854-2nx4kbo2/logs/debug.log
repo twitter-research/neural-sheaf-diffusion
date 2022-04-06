@@ -1,0 +1,24 @@
+2022-01-25 15:58:54,826 INFO    MainThread:41983 [wandb_setup.py:_flush():71] setting env: {}
+2022-01-25 15:58:54,826 INFO    MainThread:41983 [wandb_setup.py:_flush():71] setting login settings: {}
+2022-01-25 15:58:54,826 INFO    MainThread:41983 [wandb_init.py:_log_setup():371] Logging user logs to /Users/bchamberlain/workspace/research-repo/sheaf/exp/wandb/run-20220125_155854-2nx4kbo2/logs/debug.log
+2022-01-25 15:58:54,826 INFO    MainThread:41983 [wandb_init.py:_log_setup():372] Logging internal logs to /Users/bchamberlain/workspace/research-repo/sheaf/exp/wandb/run-20220125_155854-2nx4kbo2/logs/debug-internal.log
+2022-01-25 15:58:54,828 INFO    MainThread:41983 [wandb_init.py:init():404] calling init triggers
+2022-01-25 15:58:54,828 INFO    MainThread:41983 [wandb_init.py:init():409] wandb.init called with sweep_config: {}
+config: {'epochs': 1500, 'lr': 0.01, 'weight_decay': 0.0005, 'sheaf_decay': 0.0005, 'early_stopping': 200, 'd': 7, 'layers': 2, 'normalised': True, 'deg_normalised': False, 'linear': False, 'hidden_channels': 20, 'input_dropout': 0.0, 'dropout': 0.0, 'left_weights': True, 'right_weights': True, 'add_lp': True, 'add_hp': False, 'use_act': True, 'second_linear': False, 'orth': 'householder', 'sheaf_act': 'tanh', 'edge_weights': True, 'dataset': 'texas', 'seed': 43, 'cuda': 0, 'folds': 10, 'model': 'DiagSheafODE', 'entity': 'bchamberlain', 'evectors': 0, 'max_t': 1.0, 'int_method': None, 'step_size': 1, 'max_iters': 100, 'adjoint_method': 'adaptive_heun', 'adjoint': False, 'adjoint_step_size': 1, 'tol_scale': 1.0, 'tol_scale_adjoint': 1.0, 'max_nfe': 1000, 'no_early': False, 'earlystopxT': 3, 'max_test_steps': 100, 'sha': '2eda7a9a0fa621e0f4e73dee74188f29fc358c77', 'graph_size': 183, 'input_dim': 1703, 'output_dim': 5, 'device': device(type='cpu')}
+2022-01-25 15:58:54,829 INFO    MainThread:41983 [wandb_init.py:init():460] starting backend
+2022-01-25 15:58:54,830 INFO    MainThread:41983 [backend.py:_multiprocessing_setup():99] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2022-01-25 15:58:54,860 INFO    MainThread:41983 [backend.py:ensure_launched():216] starting backend process...
+2022-01-25 15:58:55,540 INFO    MainThread:41983 [backend.py:ensure_launched():221] started backend process with pid: 41997
+2022-01-25 15:58:55,551 INFO    MainThread:41983 [wandb_init.py:init():469] backend started and connected
+2022-01-25 15:58:55,589 INFO    MainThread:41983 [wandb_init.py:init():533] updated telemetry
+2022-01-25 15:58:55,625 INFO    MainThread:41983 [wandb_init.py:init():563] communicating current version
+2022-01-25 15:58:56,988 INFO    MainThread:41983 [wandb_init.py:init():568] got version response 
+2022-01-25 15:58:56,989 INFO    MainThread:41983 [wandb_init.py:init():578] communicating run to backend with 30 second timeout
+2022-01-25 15:58:57,355 INFO    MainThread:41983 [wandb_init.py:init():606] starting run threads in backend
+2022-01-25 15:59:02,372 INFO    MainThread:41983 [wandb_run.py:_console_start():1810] atexit reg
+2022-01-25 15:59:02,373 INFO    MainThread:41983 [wandb_run.py:_redirect():1684] redirect: SettingsConsole.REDIRECT
+2022-01-25 15:59:02,373 INFO    MainThread:41983 [wandb_run.py:_redirect():1689] Redirecting console.
+2022-01-25 15:59:02,376 INFO    MainThread:41983 [wandb_run.py:_redirect():1745] Redirects installed.
+2022-01-25 15:59:02,376 INFO    MainThread:41983 [wandb_init.py:init():633] run started, returning control to user process
+2022-01-25 16:11:01,899 INFO    MainThread:41983 [wandb_run.py:_atexit_cleanup():1780] got exitcode: 0
+2022-01-25 16:11:01,901 INFO    MainThread:41983 [wandb_run.py:_restore():1752] restore

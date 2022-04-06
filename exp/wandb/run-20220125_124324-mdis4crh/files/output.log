@@ -1,0 +1,39 @@
+
+  0% 0/10 [00:00<?, ?it/s]
+  0% 0/10 [00:00<?, ?it/s]/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torchdiffeq/_impl/misc.py:11: UserWarning: Dopri5Solver: Unexpected arguments {'step_size': 1, 'max_iters': 100}
+  warnings.warn('{}: Unexpected arguments {}'.format(solver.__class__.__name__, unused_kwargs))
+  0% 0/10 [1:27:16<?, ?it/s]
+Traceback (most recent call last):
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run.py", line 176, in <module>
+    test_acc, best_val_acc = run_exp(wandb.config, dataset, model_cls, fold)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run.py", line 91, in run_exp
+    train_loss, val_loss, tmp_test_loss] = test(model, data)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run.py", line 52, in test
+    logits, accs, losses, preds = model(data.x), [], [], []
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/models/cont_models.py", line 194, in forward
+    x = self.odeblock(x)
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/models/cont_models.py", line 118, in forward
+    z = odeint(
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torchdiffeq/_impl/odeint.py", line 77, in odeint
+    solution = solver.integrate(t)
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torchdiffeq/_impl/solvers.py", line 28, in integrate
+    self._before_integrate(t)
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torchdiffeq/_impl/rk_common.py", line 161, in _before_integrate
+    f0 = self.func(t[0], self.y0)
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torchdiffeq/_impl/misc.py", line 189, in forward
+    return self.base_func(t, y)
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/models/cont_models.py", line 60, in forward
+    L, _ = self.laplacian_builder(maps)
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/models/laplacian_builders.py", line 163, in forward
+    edge_index, weights = lap.mergesp(non_diag_indices, non_diag_values, diag_indices, diag_maps)
+KeyboardInterrupt

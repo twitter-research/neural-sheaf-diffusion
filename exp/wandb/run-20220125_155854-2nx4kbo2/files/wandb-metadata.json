@@ -1,0 +1,31 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.9.7",
+    "heartbeatAt": "2022-01-25T15:58:57.358889",
+    "startedAt": "2022-01-25T15:58:54.819048",
+    "docker": null,
+    "cpu_count": 12,
+    "cuda": null,
+    "args": [
+        "--dataset",
+        "texas",
+        "--model",
+        "DiagSheafODE",
+        "--d",
+        "7",
+        "--add_lp",
+        "1"
+    ],
+    "state": "running",
+    "program": "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run.py",
+    "codePath": "sheaf/exp/run.py",
+    "git": {
+        "remote": "https://github.com/twitter/research-repo.git",
+        "commit": "2eda7a9a0fa621e0f4e73dee74188f29fc358c77"
+    },
+    "email": "bchamberlain@twitter.com",
+    "root": "/Users/bchamberlain/workspace/research-repo",
+    "host": "tw-mbp-bchamberlain",
+    "username": "bchamberlain",
+    "executable": "/Users/bchamberlain/anaconda3/envs/sheaf/bin/python"
+}

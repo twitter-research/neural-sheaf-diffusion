@@ -1,0 +1,27 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.9.7",
+    "heartbeatAt": "2022-01-18T08:35:47.629020",
+    "startedAt": "2022-01-18T08:35:46.187324",
+    "docker": null,
+    "cpu_count": 12,
+    "cuda": null,
+    "args": [
+        "--sweep",
+        "30j6cdj0",
+        "--run",
+        "jm4q8qfz"
+    ],
+    "state": "running",
+    "program": "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py",
+    "codePath": "sheaf/exp/run_best_sweeps.py",
+    "git": {
+        "remote": "https://github.com/twitter/research-repo.git",
+        "commit": "32bfc408366a0af6f8c50318e3589788fcaf5df2"
+    },
+    "email": "bchamberlain@twitter.com",
+    "root": "/Users/bchamberlain/workspace/research-repo",
+    "host": "tw-mbp-bchamberlain",
+    "username": "bchamberlain",
+    "executable": "/Users/bchamberlain/anaconda3/envs/sheaf/bin/python"
+}

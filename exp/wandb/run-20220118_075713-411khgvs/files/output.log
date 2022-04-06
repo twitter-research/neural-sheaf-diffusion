@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 114, in <module>
+    run_best(opt)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 59, in run_best
+    with open(yaml_path) as f:
+KeyboardInterrupt

@@ -1,0 +1,163 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.12.9
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.9.7
+    start_time: 1643127072
+    t:
+      1:
+      - 1
+      2:
+      - 1
+      3:
+      - 16
+      4: 3.9.7
+      5: 0.12.9
+      8:
+      - 5
+add_hp:
+  desc: null
+  value: false
+add_lp:
+  desc: null
+  value: true
+adjoint:
+  desc: null
+  value: false
+adjoint_method:
+  desc: null
+  value: adaptive_heun
+adjoint_step_size:
+  desc: null
+  value: 1
+cuda:
+  desc: null
+  value: 0
+d:
+  desc: null
+  value: 7
+dataset:
+  desc: null
+  value: texas
+deg_normalised:
+  desc: null
+  value: false
+device:
+  desc: null
+  value: cpu
+dropout:
+  desc: null
+  value: 0.0
+early_stopping:
+  desc: null
+  value: 200
+earlystopxT:
+  desc: null
+  value: 3
+edge_weights:
+  desc: null
+  value: true
+entity:
+  desc: null
+  value: bchamberlain
+epochs:
+  desc: null
+  value: 1500
+evectors:
+  desc: null
+  value: 0
+folds:
+  desc: null
+  value: 10
+graph_size:
+  desc: null
+  value: 183
+hidden_channels:
+  desc: null
+  value: 20
+input_dim:
+  desc: null
+  value: 1703
+input_dropout:
+  desc: null
+  value: 0.0
+int_method:
+  desc: null
+  value: null
+layers:
+  desc: null
+  value: 2
+left_weights:
+  desc: null
+  value: true
+linear:
+  desc: null
+  value: false
+lr:
+  desc: null
+  value: 0.01
+max_iters:
+  desc: null
+  value: 100
+max_nfe:
+  desc: null
+  value: 1000
+max_t:
+  desc: null
+  value: 1.0
+max_test_steps:
+  desc: null
+  value: 100
+model:
+  desc: null
+  value: DiagSheafODE
+no_early:
+  desc: null
+  value: false
+normalised:
+  desc: null
+  value: true
+orth:
+  desc: null
+  value: householder
+output_dim:
+  desc: null
+  value: 5
+right_weights:
+  desc: null
+  value: true
+second_linear:
+  desc: null
+  value: false
+seed:
+  desc: null
+  value: 43
+sha:
+  desc: null
+  value: 2eda7a9a0fa621e0f4e73dee74188f29fc358c77
+sheaf_act:
+  desc: null
+  value: tanh
+sheaf_decay:
+  desc: null
+  value: 0.0005
+step_size:
+  desc: null
+  value: 1
+tol_scale:
+  desc: null
+  value: 1.0
+tol_scale_adjoint:
+  desc: null
+  value: 1.0
+use_act:
+  desc: null
+  value: true
+weight_decay:
+  desc: null
+  value: 0.0005

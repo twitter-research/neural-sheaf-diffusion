@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 135, in <module>
+    run_best(opt)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 81, in run_best
+    if dataset in {"squirrel", "chameleon"}:
+KeyboardInterrupt

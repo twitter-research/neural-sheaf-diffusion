@@ -1,0 +1,57 @@
+Non zero masks tensor(3312)
+Nodes 3327
+Non valid 15
+  0% 0/10 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/code.py", line 90, in runcode
+    exec(code, self.locals)
+  File "<input>", line 1, in <module>
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/_pydev_bundle/pydev_umd.py", line 198, in runfile
+    pydev_imports.execfile(filename, global_vars, local_vars)  # execute the script
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 157, in <module>
+    run_best(opt)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 116, in run_best
+    test_acc, best_val_acc = run_exp(wandb.config, dataset, model_cls, fold)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run.py", line 85, in run_exp
+    train(model, optimizer, data)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run.py", line 41, in train
+    out = model(data.x)[data.train_mask]
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/models/cont_models.py", line 292, in forward
+    x = self.odeblock(x)
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/models/cont_models.py", line 121, in forward
+    options=dict(step_size=self.opt['step_size'], max_iters=self.opt['max_iters']),
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/wandb/sdk/wandb_config.py", line 122, in __getitem__
+    return self._items[key]
+KeyError: 'max_iters'
+Traceback (most recent call last):
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/code.py", line 90, in runcode
+    exec(code, self.locals)
+  File "<input>", line 1, in <module>
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/_pydev_bundle/pydev_umd.py", line 198, in runfile
+    pydev_imports.execfile(filename, global_vars, local_vars)  # execute the script
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 157, in <module>
+    run_best(opt)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 116, in run_best
+    test_acc, best_val_acc = run_exp(wandb.config, dataset, model_cls, fold)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run.py", line 85, in run_exp
+    train(model, optimizer, data)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run.py", line 41, in train
+    out = model(data.x)[data.train_mask]
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/models/cont_models.py", line 292, in forward
+    x = self.odeblock(x)
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/models/cont_models.py", line 121, in forward
+    options=dict(step_size=self.opt['step_size'], max_iters=self.opt['max_iters']),
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/wandb/sdk/wandb_config.py", line 122, in __getitem__
+    return self._items[key]

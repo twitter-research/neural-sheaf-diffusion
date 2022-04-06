@@ -1,0 +1,72 @@
+  0% 0/10 [00:00<?, ?it/s]/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/torchdiffeq/_impl/misc.py:11: UserWarning: Euler: Unexpected arguments {'max_iters': 1}
+  warnings.warn('{}: Unexpected arguments {}'.format(solver.__class__.__name__, unused_kwargs))
+Non zero masks tensor(3312)
+Nodes 3327
+Non valid 15
+ 10% 1/10 [00:49<07:21, 49.00s/it]
+Fold 0 | Epochs: 99 | Best epoch: 15
+Test acc: 0.6767
+Best val acc: 0.7286
+Non zero masks tensor(3312)
+Nodes 3327
+
+ 20% 2/10 [01:35<06:22, 47.80s/it]
+Fold 1 | Epochs: 99 | Best epoch: 9
+Test acc: 0.7349
+Best val acc: 0.7507
+Non zero masks tensor(3312)
+Nodes 3327
+Non valid 15
+Fold 2 | Epochs: 99 | Best epoch: 11
+Test acc: 0.7190
+Best val acc: 0.7352
+Non zero masks tensor(3312)
+Nodes 3327
+
+ 30% 3/10 [02:22<05:31, 47.39s/it]
+Fold 3 | Epochs: 99 | Best epoch: 13
+Test acc: 0.7044
+Best val acc: 0.7353
+Non zero masks tensor(2110)
+Nodes 3327
+
+ 40% 4/10 [03:09<04:43, 47.27s/it]
+Fold 4 | Epochs: 99 | Best epoch: 7
+Test acc: 0.7075
+Best val acc: 0.6588
+Non zero masks tensor(2110)
+Nodes 3327
+
+ 50% 5/10 [03:57<03:56, 47.31s/it]
+Fold 5 | Epochs: 99 | Best epoch: 8
+Test acc: 0.6832
+Best val acc: 0.7329
+Non zero masks tensor(3312)
+Nodes 3327
+
+ 60% 6/10 [04:44<03:09, 47.27s/it]
+Fold 6 | Epochs: 99 | Best epoch: 21
+Test acc: 0.7391
+Best val acc: 0.7647
+Non zero masks tensor(3312)
+Nodes 3327
+
+ 70% 7/10 [05:31<02:21, 47.12s/it]
+Fold 7 | Epochs: 99 | Best epoch: 11
+Test acc: 0.7319
+Best val acc: 0.7072
+Non zero masks tensor(3312)
+Nodes 3327
+
+ 80% 8/10 [06:19<01:35, 47.56s/it]
+Fold 8 | Epochs: 99 | Best epoch: 16
+Test acc: 0.7190
+Best val acc: 0.7210
+Non zero masks tensor(3312)
+Nodes 3327
+
+ 90% 9/10 [07:08<00:48, 48.00s/it]
+Fold 9 | Epochs: 99 | Best epoch: 10
+Test acc: 0.7545
+
+100% 10/10 [07:59<00:00, 47.99s/it]

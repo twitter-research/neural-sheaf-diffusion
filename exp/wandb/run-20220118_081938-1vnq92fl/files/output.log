@@ -1,0 +1,5 @@
+  0% 0/10 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/site-packages/numpy/lib/npyio.py", line 417, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: 'splits/cornell_split_0.6_0.2_0.npz'

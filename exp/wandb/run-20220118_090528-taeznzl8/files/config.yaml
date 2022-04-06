@@ -1,0 +1,186 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.12.9
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    m:
+    - 1: epoch_step
+      6:
+      - 3
+    python_version: 3.9.7
+    start_time: 1642496728
+    t:
+      1:
+      - 1
+      3:
+      - 16
+      4: 3.9.7
+      5: 0.12.9
+      8:
+      - 5
+add_hp:
+  desc: null
+  value: true
+add_lp:
+  desc: null
+  value: true
+adjoint:
+  desc: null
+  value: false
+cpus:
+  desc: null
+  value: 1
+d:
+  desc: null
+  value: 3
+dataset:
+  desc: null
+  value: citeseer
+deg_normalised:
+  desc: null
+  value: false
+device:
+  desc: null
+  value: cpu
+dropout:
+  desc: null
+  value: 0.5518506586541817
+early_stopping:
+  desc: null
+  value: 200
+earlystopxT:
+  desc: null
+  value: 3
+edge_weights:
+  desc: null
+  value: false
+epoch:
+  desc: null
+  value: 10
+epochs:
+  desc: null
+  value: 100
+evectors:
+  desc: null
+  value: 0
+folds:
+  desc: null
+  value: 10
+gpus:
+  desc: null
+  value: 0
+graph_size:
+  desc: null
+  value: 3327
+hidden_channels:
+  desc: null
+  value: 16
+input_dim:
+  desc: null
+  value: 3703
+input_dropout:
+  desc: null
+  value: 0.042339219215966464
+int_method:
+  desc: null
+  value: euler
+layers:
+  desc: null
+  value: 4
+left_weights:
+  desc: null
+  value: true
+linear:
+  desc: null
+  value: true
+lr:
+  desc: null
+  value: 0.0707029551859165
+max_nfe:
+  desc: null
+  value: 5000
+max_t:
+  desc: null
+  value: 4.0401537583005105
+model:
+  desc: null
+  value: GeneralSheafODE
+name:
+  desc: null
+  value: null
+no_early:
+  desc: null
+  value: false
+normalised:
+  desc: null
+  value: true
+orth:
+  desc: null
+  value: householder
+output_dim:
+  desc: null
+  value: 6
+right_weights:
+  desc: null
+  value: true
+run:
+  desc: null
+  value: jm4q8qfz
+second_linear:
+  desc: null
+  value: false
+seed:
+  desc: null
+  value: 43
+sha:
+  desc: null
+  value: null
+sheaf_act:
+  desc: null
+  value: tanh
+sheaf_decay:
+  desc: null
+  value: 0.0002930305923044299
+step_size:
+  desc: null
+  value: 1
+sweep:
+  desc: null
+  value: 30j6cdj0
+tol_scale:
+  desc: null
+  value: 1
+use_act:
+  desc: null
+  value: true
+use_wandb_offline:
+  desc: null
+  value: false
+wandb:
+  desc: null
+  value: true
+wandb_entity:
+  desc: null
+  value: bchamberlain
+wandb_group:
+  desc: null
+  value: null
+wandb_project:
+  desc: null
+  value: research-repo-sheaf_exp
+wandb_track_grad_flow:
+  desc: null
+  value: false
+wandb_version:
+  desc: null
+  value: 1
+wandb_watch_grad:
+  desc: null
+  value: false
+weight_decay:
+  desc: null
+  value: 0.0002930305923044299

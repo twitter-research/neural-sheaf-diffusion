@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/code.py", line 90, in runcode
+    exec(code, self.locals)
+  File "<input>", line 1, in <module>
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/_pydev_bundle/pydev_umd.py", line 198, in runfile
+    pydev_imports.execfile(filename, global_vars, local_vars)  # execute the script
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 135, in <module>
+    run_best(opt)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 96, in run_best
+    for fold in tqdm(range(args.folds)):
+AttributeError: 'Namespace' object has no attribute 'folds'
+Traceback (most recent call last):
+  File "/Users/bchamberlain/anaconda3/envs/sheaf/lib/python3.9/code.py", line 90, in runcode
+    exec(code, self.locals)
+  File "<input>", line 1, in <module>
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/_pydev_bundle/pydev_umd.py", line 198, in runfile
+    pydev_imports.execfile(filename, global_vars, local_vars)  # execute the script
+  File "/Applications/PyCharm.app/Contents/plugins/python/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 135, in <module>
+    run_best(opt)
+  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 96, in run_best
+    for fold in tqdm(range(args.folds)):
