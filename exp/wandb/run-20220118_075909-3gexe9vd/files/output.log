@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 114, in <module>
-    parser.add_argument('--gpus', type=float, default=0, help='number of gpus per trial. Can be fractional')
-  File "/Users/bchamberlain/workspace/research-repo/sheaf/exp/run_best_sweeps.py", line 68, in run_best
-    dataset = yaml_opt['dataset']
-KeyboardInterrupt
