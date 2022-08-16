@@ -12,7 +12,6 @@ import multiprocessing
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import argparse
 import torch
 import torch.nn.functional as F
 import git
@@ -21,7 +20,7 @@ import numpy as np
 from exp.parser import get_parser
 from models.cont_models import DiagSheafDiffusion
 from models.disc_models import DiscreteDiagSheafDiffusion, DiscreteBundleSheafDiffusion
-from data.heterophilic import get_dataset, get_fixed_splits
+from utils.heterophilic import get_dataset, get_fixed_splits
 from torch_geometric.utils import degree
 from tqdm import tqdm
 import wandb

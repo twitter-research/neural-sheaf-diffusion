@@ -1,23 +1,18 @@
-# twitter/template
+# Neural Sheaf Diffusion
 
-[![Project Status: WIP](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+This repository contains the official code for the paper 
+[Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs](https://arxiv.org/abs/2202.04579).
 
-**TODO(new project):** Review this entire file and update it to reflect your
-project. Feel free to add or remove sections as appropriate, and get ideas from
-[Awesome README](https://github.com/matiassingers/awesome-readme).
+## Getting started
 
-Include a short description of the project.
+To set up the environment, run the following command:
 
-## Support
+```commandline
+conda env create --name nsd --file=environment.yml
+conda activate nsd
+```
 
-Create a [new issue](https://github.com/twitter/template/issues/new/choose) or
-[join a discussion](https://github.com/twitter/template/discussions).
-
-## Contributing
-
-We welcome contributions of all kinds! See our [contributing
-guide](CONTRIBUTING.md) as well as Twitter's [Open Source Code of
-Conduct](https://github.com/twitter/.github/blob/master/code-of-conduct.md).
-
-## Security Issues?
-Please report sensitive security issues via Twitter's bug-bounty program (https://hackerone.com/twitter) rather than GitHub.
+To make sure that everything is set up correctly, you can run all the tests using:
+```commandline
+pytest -v .
+```

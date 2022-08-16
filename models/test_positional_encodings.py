@@ -9,7 +9,7 @@ from torch import tensor
 from models.positional_encodings import append_top_k_evectors, get_laplacian_evectors
 from torch_geometric.utils import to_scipy_sparse_matrix
 from scipy.sparse import csr_matrix
-from data.heterophilic import get_dataset
+from utils.heterophilic import get_dataset
 
 
 class PosEncTests(unittest.TestCase):

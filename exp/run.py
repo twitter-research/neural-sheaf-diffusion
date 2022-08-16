@@ -18,7 +18,7 @@ from exp.parser import get_parser
 from models.positional_encodings import append_top_k_evectors
 from models.cont_models import DiagSheafDiffusion, BundleSheafDiffusion, GeneralSheafDiffusion
 from models.disc_models import DiscreteDiagSheafDiffusion, DiscreteBundleSheafDiffusion, DiscreteGeneralSheafDiffusion
-from data.heterophilic import get_dataset, get_fixed_splits
+from utils.heterophilic import get_dataset, get_fixed_splits
 
 
 def reset_wandb_env():

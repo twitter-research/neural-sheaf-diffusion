@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from lib.perm_utils import generate_permutation_matrices, permute_graph
 from models.disc_models import DiscreteDiagSheafDiffusion, DiscreteBundleSheafDiffusion, DiscreteGeneralSheafDiffusion
 from torch_geometric.utils import from_networkx
-from data.heterophilic import get_dataset
+from utils.heterophilic import get_dataset
 
 
 def get_test_config():

@@ -10,7 +10,7 @@ import lib.laplace as lap
 from models.laplacian_builders import DiagLaplacianBuilder, GeneralLaplacianBuilder, NormConnectionLaplacianBuilder
 from torch_geometric.utils import from_networkx
 from lib.laplace import build_dense_laplacian
-from data.heterophilic import get_dataset
+from utils.heterophilic import get_dataset
 
 
 @pytest.mark.parametrize("graph_id, d, normalised",
