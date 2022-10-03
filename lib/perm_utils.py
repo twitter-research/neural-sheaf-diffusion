@@ -9,7 +9,6 @@ from torch_geometric.data import Data
 
 
 def permute_graph(graph: Data, P: np.ndarray) -> Data:
-    # TODO: support edge features and their permutation
     assert graph.edge_attr is None
 
     # Check validity of permutation matrix

@@ -52,10 +52,10 @@ def build_restriction_maps(graph, K, Delta):
         for n in range(N):
             if B_T[e, n] == -1:
                 source = n
-                maps[e, 0, :, :] = torch.tensor(-Delta[e * K:(e + 1) * K, n * K:(n + 1) * K])
+                maps[e, 0, :, :] = -Delta[e * K:(e + 1) * K, n * K:(n + 1) * K].clone().detach()
             elif B_T[e, n] == 1:
                 target = n
-                maps[e, 1, :, :] = torch.tensor(Delta[e * K:(e + 1) * K, n * K:(n + 1) * K])
+                maps[e, 1, :, :] = Delta[e * K:(e + 1) * K, n * K:(n + 1) * K].clone().detach()
 
         edge_index[0, e] = source
         edge_index[1, e] = target
