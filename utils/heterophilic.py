@@ -1,10 +1,6 @@
 # Copyright 2022 Twitter, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-"""
-Code taken from https://github.com/jianhao2016/GPRGNN/blob/master/src/dataset_utils.py
-"""
-
 import torch
 import numpy as np
 import os.path as osp
@@ -20,7 +16,10 @@ from definitions import ROOT_DIR
 
 
 class Actor(InMemoryDataset):
-    r"""The actor-only induced subgraph of the film-director-actor-writer
+    r"""
+    Code adapted from https://github.com/pyg-team/pytorch_geometric/blob/2.0.4/torch_geometric/datasets/actor.py
+
+    The actor-only induced subgraph of the film-director-actor-writer
     network used in the
     `"Geom-GCN: Geometric Graph Convolutional Networks"
     <https://openreview.net/forum?id=S1e2agrFvS>`_ paper.
@@ -108,7 +107,10 @@ class Actor(InMemoryDataset):
 
 
 class WikipediaNetwork(InMemoryDataset):
-    r"""The Wikipedia networks introduced in the
+    r"""
+    Code adapted from https://github.com/pyg-team/pytorch_geometric/blob/2.0.4/torch_geometric/datasets/wikipedia_network.py
+
+    The Wikipedia networks introduced in the
     `"Multi-scale Attributed Node Embedding"
     <https://arxiv.org/abs/1909.13021>`_ paper.
     Nodes represent web pages and edges represent hyperlinks between them.
@@ -191,7 +193,10 @@ class WikipediaNetwork(InMemoryDataset):
 
 
 class WebKB(InMemoryDataset):
-    r"""The WebKB datasets used in the
+    r"""
+    Code adapted from https://github.com/pyg-team/pytorch_geometric/blob/2.0.4/torch_geometric/datasets/webkb.py
+
+    The WebKB datasets used in the
     `"Geom-GCN: Geometric Graph Convolutional Networks"
     <https://openreview.net/forum?id=S1e2agrFvS>`_ paper.
     Nodes represent web pages and edges represent hyperlinks between them.
@@ -268,35 +273,6 @@ class WebKB(InMemoryDataset):
         return '{}()'.format(self.name)
 
 
-def index_to_mask(index, size):
-    mask = torch.zeros(size, dtype=torch.bool, device=index.device)
-    mask[index] = 1
-    return mask
-
-
-def generate_random_splits(data, num_classes, train_rate=0.6, val_rate=0.2):
-    """Generates training, validation and testing masks for node classification tasks."""
-    percls_trn = int(round(train_rate * len(data.y) / num_classes))
-    val_lb = int(round(val_rate * len(data.y)))
-
-    indices = []
-    for i in range(num_classes):
-        index = (data.y == i).nonzero().view(-1)
-        index = index[torch.randperm(index.size(0))]
-        indices.append(index)
-
-    train_index = torch.cat([i[:percls_trn] for i in indices], dim=0)
-
-    rest_index = torch.cat([i[percls_trn:] for i in indices], dim=0)
-    rest_index = rest_index[torch.randperm(rest_index.size(0))]
-
-    data.train_mask = index_to_mask(train_index, size=data.num_nodes)
-    data.val_mask = index_to_mask(rest_index[:val_lb], size=data.num_nodes)
-    data.test_mask = index_to_mask(rest_index[val_lb:], size=data.num_nodes)
-
-    return data
-
-
 def get_fixed_splits(data, dataset_name, seed):
     with np.load(f'splits/{dataset_name}_split_0.6_0.2_{seed}.npz') as splits_file:
         train_mask = splits_file['train_mask']
@@ -307,7 +283,6 @@ def get_fixed_splits(data, dataset_name, seed):
     data.val_mask = torch.tensor(val_mask, dtype=torch.bool)
     data.test_mask = torch.tensor(test_mask, dtype=torch.bool)
 
-    # Remove the nodes that the label vectors are all zeros, they aren't assigned to any class
     if dataset_name in {'cora', 'citeseer', 'pubmed'}:
         data.train_mask[data.non_valid_samples] = False
         data.test_mask[data.non_valid_samples] = False

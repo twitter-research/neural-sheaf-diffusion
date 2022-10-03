@@ -59,7 +59,10 @@ class Planetoid(InMemoryDataset):
 
 
 def parse_index_file(filename):
-    """Parse index file."""
+    """Code taken from https://github.com/Yujun-Yan/Heterophily_and_oversmoothing/blob/main/process.py#L18""
+
+    Parse index file.
+    """
     index = []
     for line in open(filename):
         index.append(int(line.strip()))
@@ -67,6 +70,7 @@ def parse_index_file(filename):
 
 
 def full_load_citation(dataset_str, raw_dir):
+    """Code adapted from https://github.com/Yujun-Yan/Heterophily_and_oversmoothing/blob/main/process.py#L33"""
     names = ['x', 'y', 'tx', 'ty', 'allx', 'ally', 'graph']
     objects = []
     for i in range(len(names)):
