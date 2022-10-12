@@ -33,16 +33,14 @@ jobs:
           path: ~/conda_pkgs_dir
           key:
             ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{
-            hashFiles('requirements.txt') }}
+            hashFiles('environment_cpu.yml') }}
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          activate-environment: test
+          activate-environment: ndf
+          environment-file: environment_cpu.yml
           python-version: 3.9
           use-only-tar-bz2: true # IMPORTANT: This needs to be set for caching to work properly!
-      - name: Set up env
-        run: |
-          conda env create --file=environment_cpu.yml
-          conda activate nsd
       - name: Test with pytest
         run: |
+          conda activate nsd
           pytest -v
