@@ -2,10 +2,11 @@
 [![License: MIT](https://img.shields.io/badge/License-Apache%202-green.svg)](https://github.com/twitter-research/neural-sheaf-diffusion/blob/main/LICENSE)
 
 # Neural Sheaf Diffusion
-### A Topological Perspective on Heterophily and Oversmoothing in GNNs
 
 This repository contains the official code for the paper 
 **[Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs](https://arxiv.org/abs/2202.04579) (NeurIPS 2022)**.
+
+![Sheaf Neural Networks](figures/sheaf.png)
 
 ## Getting started
 
@@ -43,7 +44,7 @@ export ENTITY=<WANDB_ACCOUNT_ID>
 sh ./exp/scripts/run_texas.sh
 ```
  
-### Running a hyperparameter sweep
+### Hyperparameter Sweeps
 
 To run a hyperparameter sweep, you will need a `wandb` account. Once you have an account, you can run an example
 sweep as follows:
