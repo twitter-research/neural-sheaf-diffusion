@@ -1,0 +1,66 @@
+program: exp/run.py
+method: random
+metric:
+  name: val_acc
+  goal: maximize
+parameters:
+  model:
+    distribution: constant
+    value: "BundleSheaf"
+  d:
+    distribution: categorical
+    values: [2, 3, 4]
+  add_lp:
+    distribution: categorical
+    values: [1, 0]
+  add_hp:
+    distribution: categorical
+    values: [1, 0]
+  dataset:
+    distribution: categorical
+    values: ['cornell', 'texas', 'wisconsin']
+  layers:
+    distribution: categorical
+    values: [2, 3, 4, 5, 6]
+  hidden_channels:
+    distribution: categorical
+    values: [8, 16, 32]
+  weight_decay:
+    distribution: log_uniform
+    min: -9.2
+    max: -6.8
+  sheaf_decay:
+    distribution: log_uniform
+    min: -11.0
+    max: -6.8
+  input_dropout:
+    distribution: categorical
+    values: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+  dropout:
+    distribution: categorical
+    values: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+  lr:
+    value: 0.02
+  epochs:
+    distribution: constant
+    value: 1000
+  early_stopping:
+    distribution: constant
+    value: 200
+  folds:
+    distribution: constant
+    value: 10
+  orth:
+    distribution: constant
+    value: "householder"
+command:
+  - ${env}
+  - python3
+  - ${program}
+  - ${args}
+  - --left_weights=True
+  - --right_weights=True
+  - --use_act=True
+  - --normalised=True
+  - --edge_weights=True
+  - --entity=${ENTITY}
