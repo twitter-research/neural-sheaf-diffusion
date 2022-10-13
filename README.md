@@ -60,6 +60,13 @@ If you like to run the sweep on multiple GPUs, then run the following command by
 ```bash
 sh run_sweeps.sh <SWEEP_ID>
 ```
+### Datasets
+
+The WebKB datasets (`texas`, `wisconsin`, `cornell`) and `actor`/`film` datasets are downloaded on the fly. The
+[WikipediaNetwork datasets](https://academic.oup.com/comnet/article/9/2/cnab014/6271062) with the Geom-GCN pre-processing 
+can be downloaded from the [Geom-GCN repo](https://github.com/graphdml-uiuc-jlu/geom-gcn/tree/f1fc0d14b3b019c562737240d06ec83b07d16a8f/new_data).
+The files for the Planetoid datasets can also be found in the [Geom-GCN repo](https://github.com/graphdml-uiuc-jlu/geom-gcn/tree/master/data). 
+The downloaded files must be placed into `datasets/<DATASET_NAME>/raw/`.
 
 ## Credits
 
