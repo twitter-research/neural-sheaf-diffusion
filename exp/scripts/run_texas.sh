@@ -13,4 +13,5 @@ python -m exp.run \
     --dropout=0.7 \
     --use_act=True \
     --model=BundleSheaf \
-    --normalised=True
+    --normalised=True \
+    --entity="${ENTITY}"

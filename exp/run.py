@@ -12,6 +12,7 @@ import numpy as np
 import wandb
 from tqdm import tqdm
 
+# This is required here by wandb sweeps.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from exp.parser import get_parser
@@ -178,8 +179,9 @@ if __name__ == '__main__':
     random.seed(args.seed)
 
     results = []
-    wandb.init(project="sheaf", config=vars(args), entity=args.entity)
+    print(f"Running with wandb account: {args.entity}")
     print(args)
+    wandb.init(project="sheaf", config=vars(args), entity=args.entity)
 
     for fold in tqdm(range(args.folds)):
         test_acc, best_val_acc, keep_running = run_exp(wandb.config, dataset, model_cls, fold)

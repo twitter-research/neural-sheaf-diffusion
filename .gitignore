@@ -3,5 +3,5 @@
 *.pytest_cache
 .idea/
 datasets/
-*/wandb/
+wandb/
 *.DS_Store

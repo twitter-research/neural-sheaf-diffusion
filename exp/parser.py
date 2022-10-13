@@ -61,7 +61,7 @@ def get_parser():
     parser.add_argument('--folds', type=int, default=10)
     parser.add_argument('--model', type=str, choices=['DiagSheaf', 'BundleSheaf', 'GeneralSheaf', 'DiagSheafODE',
                                                       'BundleSheafODE', 'GeneralSheafODE'], default=None)
-    parser.add_argument('--entity', type=str, default="bchamberlain")
+    parser.add_argument('--entity', type=str, default=None)
     parser.add_argument('--evectors', type=int, default=0, help="Number of Laplacian PE eigenvectors to use.")
 
     # ODE args
