@@ -72,11 +72,13 @@ The downloaded files must be placed into `datasets/<DATASET_NAME>/raw/`.
 
 For attribution in academic contexts, please use the bibtex entry below:
 ```
-@inproceedings{bodnar2022neural,
- title = {Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in {GNNs}},
- author={Bodnar, Cristian and Di Giovanni, Francesco and Chamberlain, Benjamin Paul and Li{\`o}, Pietro and Bronstein, Michael M},
- booktitle = {Advances in Neural Information Processing Systems},
- volume = {35},
- year = {2022}
+@inproceedings{
+ bodnar2022neural,
+ title={Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in {GNN}s},
+ author={Cristian Bodnar and Francesco Di Giovanni and Benjamin Paul Chamberlain and Pietro Li{\`o} and Michael M. Bronstein},
+ booktitle={Advances in Neural Information Processing Systems},
+ editor={Alice H. Oh and Alekh Agarwal and Danielle Belgrave and Kyunghyun Cho},
+ year={2022},
+ url={https://openreview.net/forum?id=vbPsD-BhOZ}
 }
 ```
