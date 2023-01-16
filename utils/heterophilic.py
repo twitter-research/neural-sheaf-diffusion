@@ -218,7 +218,7 @@ class WebKB(InMemoryDataset):
     """
 
     url = ('https://raw.githubusercontent.com/graphdml-uiuc-jlu/geom-gcn/'
-           'master/new_data')
+           '1c4c04f93fa6ada91976cda8d7577eec0e3e5cce/new_data')
 
     def __init__(self, root, name, transform=None, pre_transform=None):
         self.name = name.lower()

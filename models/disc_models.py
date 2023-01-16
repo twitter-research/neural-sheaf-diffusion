@@ -34,10 +34,10 @@ class DiscreteDiagSheafDiffusion(SheafDiffusion):
 
         num_sheaf_learners = min(self.layers, self.layers if self.nonlinear else 1)
         for i in range(num_sheaf_learners):
-            # self.sheaf_learners.append(LocalConcatSheafLearner(
-            #     self.hidden_dim, out_shape=(self.d,), sheaf_act=self.sheaf_act))
-            self.sheaf_learners.append(LocalConcatSheafLearnerVariant(self.final_d,
-                self.hidden_channels, out_shape=(self.d,), sheaf_act=self.sheaf_act))
+            self.sheaf_learners.append(LocalConcatSheafLearner(
+                self.hidden_dim, out_shape=(self.d,), sheaf_act=self.sheaf_act))
+            # self.sheaf_learners.append(LocalConcatSheafLearnerVariant(self.final_d,
+                # self.hidden_channels, out_shape=(self.d,), sheaf_act=self.sheaf_act))
         self.laplacian_builder = lb.DiagLaplacianBuilder(self.graph_size, edge_index, d=self.d,
                                                          normalised=self.normalised,
                                                          deg_normalised=self.deg_normalised,
