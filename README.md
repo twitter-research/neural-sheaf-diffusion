@@ -27,7 +27,7 @@ pytest -v .
 ## Running experiments
 
 To run the experiments without a Weights & Biases (wandb) account, first disable `wandb` by running `wandb disabled`. 
-Then, to run the training procedure on `texas`, simply run the example script provided:
+Then, for instance, to run the training procedure on `texas`, simply run the example script provided:
 ```commandline
 sh ./exp/scripts/run_texas.sh
 ```
@@ -43,7 +43,8 @@ Then, you can run the example training procedure on `texas` via:
 export ENTITY=<WANDB_ACCOUNT_ID>
 sh ./exp/scripts/run_texas.sh
 ```
- 
+Scripts for the other heterophilic datasets are also provided in `exp/scripts`. 
+
 ### Hyperparameter Sweeps
 
 To run a hyperparameter sweep, you will need a `wandb` account. Once you have an account, you can run an example

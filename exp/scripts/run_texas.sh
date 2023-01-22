@@ -14,4 +14,5 @@ python -m exp.run \
     --use_act=True \
     --model=BundleSheaf \
     --normalised=True \
+    --sparse_learner=True \
     --entity="${ENTITY}"

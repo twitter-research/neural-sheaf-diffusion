@@ -20,4 +20,6 @@ python -m exp.run \
     --right_weights=True \
     --use_act=True \
     --normalised=True \
-    --edge_weights=True
+    --edge_weights=True \
+    --sparse_learner=False \
+    --entity="${ENTITY}"

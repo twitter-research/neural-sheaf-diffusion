@@ -42,6 +42,7 @@ def get_test_config():
         'adjoint_step_size': 0.1,
         'edge_weights': False,
         'orth': 'householder',
+        'sparse_learner': False,
     }
 
 
