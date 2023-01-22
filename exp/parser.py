@@ -53,6 +53,7 @@ def get_parser():
     parser.add_argument('--sheaf_act', type=str, default="tanh", help="Activation to use in sheaf learner.")
     parser.add_argument('--edge_weights', dest='edge_weights', type=str2bool, default=True,
                         help="Learn edge weights for connection Laplacian")
+    parser.add_argument('--sparse_learner', dest='sparse_learner', type=str2bool, default=False)
 
     # Experiment parameters
     parser.add_argument('--dataset', default='texas')

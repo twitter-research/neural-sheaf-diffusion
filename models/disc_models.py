@@ -34,10 +34,12 @@ class DiscreteDiagSheafDiffusion(SheafDiffusion):
 
         num_sheaf_learners = min(self.layers, self.layers if self.nonlinear else 1)
         for i in range(num_sheaf_learners):
-            self.sheaf_learners.append(LocalConcatSheafLearner(
-                self.hidden_dim, out_shape=(self.d,), sheaf_act=self.sheaf_act))
-            # self.sheaf_learners.append(LocalConcatSheafLearnerVariant(self.final_d,
-                # self.hidden_channels, out_shape=(self.d,), sheaf_act=self.sheaf_act))
+            if self.sparse_learner:
+                self.sheaf_learners.append(LocalConcatSheafLearnerVariant(self.final_d,
+                    self.hidden_channels, out_shape=(self.d,), sheaf_act=self.sheaf_act))
+            else:
+                self.sheaf_learners.append(LocalConcatSheafLearner(
+                    self.hidden_dim, out_shape=(self.d,), sheaf_act=self.sheaf_act))
         self.laplacian_builder = lb.DiagLaplacianBuilder(self.graph_size, edge_index, d=self.d,
                                                          normalised=self.normalised,
                                                          deg_normalised=self.deg_normalised,
@@ -119,10 +121,13 @@ class DiscreteBundleSheafDiffusion(SheafDiffusion):
 
         num_sheaf_learners = min(self.layers, self.layers if self.nonlinear else 1)
         for i in range(num_sheaf_learners):
-            # self.sheaf_learners.append(LocalConcatSheafLearner(
-            #     self.hidden_dim, out_shape=(self.get_param_size(),), sheaf_act=self.sheaf_act))
-            self.sheaf_learners.append(LocalConcatSheafLearnerVariant(self.final_d,
-                self.hidden_channels, out_shape=(self.get_param_size(),), sheaf_act=self.sheaf_act))
+            if self.sparse_learner:
+                self.sheaf_learners.append(LocalConcatSheafLearnerVariant(self.final_d,
+                    self.hidden_channels, out_shape=(self.get_param_size(),), sheaf_act=self.sheaf_act))
+            else:
+                self.sheaf_learners.append(LocalConcatSheafLearner(
+                    self.hidden_dim, out_shape=(self.get_param_size(),), sheaf_act=self.sheaf_act))
+            
             if self.use_edge_weights:
                 self.weight_learners.append(EdgeWeightLearner(self.hidden_dim, edge_index))
         self.laplacian_builder = lb.NormConnectionLaplacianBuilder(
@@ -221,10 +226,12 @@ class DiscreteGeneralSheafDiffusion(SheafDiffusion):
 
         num_sheaf_learners = min(self.layers, self.layers if self.nonlinear else 1)
         for i in range(num_sheaf_learners):
-            # self.sheaf_learners.append(LocalConcatSheafLearner(
-            #     self.hidden_dim, out_shape=(self.d, self.d), sheaf_act=self.sheaf_act))
-            self.sheaf_learners.append(LocalConcatSheafLearnerVariant(self.final_d,
-                self.hidden_channels, out_shape=(self.d, self.d), sheaf_act=self.sheaf_act))
+            if self.sparse_learner:
+                self.sheaf_learners.append(LocalConcatSheafLearnerVariant(self.final_d,
+                    self.hidden_channels, out_shape=(self.d, self.d), sheaf_act=self.sheaf_act))
+            else:
+                self.sheaf_learners.append(LocalConcatSheafLearner(
+                    self.hidden_dim, out_shape=(self.d, self.d), sheaf_act=self.sheaf_act))
         self.laplacian_builder = lb.GeneralLaplacianBuilder(
             self.graph_size, edge_index, d=self.d, add_lp=self.add_lp, add_hp=self.add_hp,
             normalised=self.normalised, deg_normalised=self.deg_normalised)

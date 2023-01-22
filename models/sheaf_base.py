@@ -34,6 +34,7 @@ class SheafDiffusion(nn.Module):
         self.dropout = args['dropout']
         self.left_weights = args['left_weights']
         self.right_weights = args['right_weights']
+        self.sparse_learner = args['sparse_learner']
         self.use_act = args['use_act']
         self.input_dim = args['input_dim']
         self.hidden_channels = args['hidden_channels']
