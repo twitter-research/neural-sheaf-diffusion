@@ -11,11 +11,11 @@ class SheafDiffusion(nn.Module):
     def __init__(self, edge_index, args):
         super(SheafDiffusion, self).__init__()
 
-        assert args['d'] > 0
-        self.d = args['d']
+        assert args["d"] > 0
+        self.d = args["d"]
         self.edge_index = edge_index
-        self.add_lp = args['add_lp']
-        self.add_hp = args['add_hp']
+        self.add_lp = args["add_lp"]
+        self.add_hp = args["add_hp"]
 
         self.final_d = self.d
         if self.add_hp:
@@ -23,28 +23,28 @@ class SheafDiffusion(nn.Module):
         if self.add_lp:
             self.final_d += 1
 
-        self.hidden_dim = args['hidden_channels'] * self.final_d
-        self.device = args['device']
-        self.graph_size = args['graph_size']
-        self.layers = args['layers']
-        self.normalised = args['normalised']
-        self.deg_normalised = args['deg_normalised']
-        self.nonlinear = not args['linear']
-        self.input_dropout = args['input_dropout']
-        self.dropout = args['dropout']
-        self.left_weights = args['left_weights']
-        self.right_weights = args['right_weights']
-        self.sparse_learner = args['sparse_learner']
-        self.use_act = args['use_act']
-        self.input_dim = args['input_dim']
-        self.hidden_channels = args['hidden_channels']
-        self.output_dim = args['output_dim']
-        self.layers = args['layers']
-        self.sheaf_act = args['sheaf_act']
-        self.second_linear = args['second_linear']
-        self.orth_trans = args['orth']
-        self.use_edge_weights = args['edge_weights']
-        self.t = args['max_t']
+        self.hidden_dim = args["hidden_channels"] * self.final_d
+        self.device = args["device"]
+        self.graph_size = args["graph_size"]
+        self.layers = args["layers"]
+        self.normalised = args["normalised"]
+        self.deg_normalised = args["deg_normalised"]
+        self.nonlinear = not args["linear"]
+        self.input_dropout = args["input_dropout"]
+        self.dropout = args["dropout"]
+        self.left_weights = args["left_weights"]
+        self.right_weights = args["right_weights"]
+        self.sparse_learner = args["sparse_learner"]
+        self.use_act = args["use_act"]
+        self.input_dim = args["input_dim"]
+        self.hidden_channels = args["hidden_channels"]
+        self.output_dim = args["output_dim"]
+        self.layers = args["layers"]
+        self.sheaf_act = args["sheaf_act"]
+        self.second_linear = args["second_linear"]
+        self.orth_trans = args["orth"]
+        self.use_edge_weights = args["edge_weights"]
+        self.t = args["max_t"]
         self.time_range = torch.tensor([0.0, self.t], device=self.device)
         self.laplacian_builder = None
 

@@ -22,7 +22,9 @@ def find_or_make_encodings(dataset, k, max_evector_dim=64):
     # there are only num_nodes evectors, and the evector lib fails when k=num_nodes
     if dataset.data.num_nodes < max_evector_dim:
         max_evector_dim = dataset.data.num_nodes - 2
-    assert k <= max_evector_dim, f'maximum number of eigenvectors to cache {max_evector_dim} is less than the number requested {k}'
+    assert (
+        k <= max_evector_dim
+    ), f"maximum number of eigenvectors to cache {max_evector_dim} is less than the number requested {k}"
 
     fname = os.path.join(POS_ENC_PATH, f"{dataset.name}_evectors_{max_evector_dim}.pkl")
     print(f"[i] Looking for positional encodings in {fname}...")
@@ -67,11 +69,12 @@ def append_top_k_evectors(dataset, k=2):
 def get_laplacian_evectors(A, k):
     degree_mat = diags(np.squeeze(np.asarray(A.sum(axis=1))))
     L = degree_mat - A
-    eigenvalues, eigenvectors = linalg.eigsh(L, which='SA', k=k)
+    eigenvalues, eigenvectors = linalg.eigsh(L, which="SA", k=k)
     return eigenvalues, eigenvectors
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+
     class test_dataset:
         def __init__(self, edge_index, x):
             self.edge_index = edge_index

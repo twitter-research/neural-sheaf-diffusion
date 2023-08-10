@@ -8,8 +8,17 @@ import numpy as np
 from models.orthogonal import Orthogonal
 
 
-@pytest.mark.parametrize("d, orth_trans", [(2, "euler"), (3, "euler"), (4, "householder"), (2, "householder"),
-                                           (5, "matrix_exp"), (6, "cayley")])
+@pytest.mark.parametrize(
+    "d, orth_trans",
+    [
+        (2, "euler"),
+        (3, "euler"),
+        (4, "householder"),
+        (2, "householder"),
+        (5, "matrix_exp"),
+        (6, "cayley"),
+    ],
+)
 def test_orthogonal_transformations(d, orth_trans):
     # Fix the random seed
     torch.random.manual_seed(0)
@@ -36,7 +45,3 @@ def test_orthogonal_transformations(d, orth_trans):
     # We only obtain SO(n) matrices here.
     det = torch.linalg.det(A)
     assert torch.allclose(det, torch.ones_like(det))
-
-
-
-

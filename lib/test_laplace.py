@@ -7,7 +7,12 @@ import numpy as np
 import networkx as nx
 
 from scipy import linalg
-from lib.laplace import build_sheaf_laplacian, build_norm_sheaf_laplacian, build_sheaf_difussion_matrix, dirichlet_energy
+from lib.laplace import (
+    build_sheaf_laplacian,
+    build_norm_sheaf_laplacian,
+    build_sheaf_difussion_matrix,
+    dirichlet_energy,
+)
 
 
 def build_dense_laplacian(graph, K, normalised=False, augmented=False):
@@ -30,7 +35,7 @@ def build_dense_laplacian(graph, K, normalised=False, augmented=False):
     D_ones = np.kron(I, one_matrix)
     D = L_dense * D_ones
     if augmented:
-        D = D + np.identity(N*K)
+        D = D + np.identity(N * K)
     D_inv = linalg.fractional_matrix_power(D, -0.5)
     nL_dense = D_inv @ L_dense @ D_inv
 
@@ -52,10 +57,10 @@ def build_restriction_maps(graph, K, Delta):
         for n in range(N):
             if B_T[e, n] == -1:
                 source = n
-                maps[e, 0, :, :] = -Delta[e * K:(e + 1) * K, n * K:(n + 1) * K].clone().detach()
+                maps[e, 0, :, :] = -Delta[e * K : (e + 1) * K, n * K : (n + 1) * K].clone().detach()
             elif B_T[e, n] == 1:
                 target = n
-                maps[e, 1, :, :] = Delta[e * K:(e + 1) * K, n * K:(n + 1) * K].clone().detach()
+                maps[e, 1, :, :] = Delta[e * K : (e + 1) * K, n * K : (n + 1) * K].clone().detach()
 
         edge_index[0, e] = source
         edge_index[1, e] = target
@@ -81,7 +86,7 @@ def test_build_sheaf_laplacian(graph_id, K):
 
     # Compute the sparse sheaf Laplacian efficiently
     index, values = build_sheaf_laplacian(N, K, edge_index, maps)
-    L = torch.sparse_coo_tensor(index, values, size=(N*K, N*K)).to_dense()
+    L = torch.sparse_coo_tensor(index, values, size=(N * K, N * K)).to_dense()
 
     assert torch.all(torch.abs(L - L_dense) < 1e-5)
 
@@ -120,7 +125,7 @@ def test_build_sheaf_difussion_map(graph_id, K, augmented):
 
     # Build a dense normalised sheaf Laplacian
     Delta, nL_dense = build_dense_laplacian(graph, K, normalised=True, augmented=augmented)
-    P_dense = torch.eye(N*K, N*K) - nL_dense
+    P_dense = torch.eye(N * K, N * K) - nL_dense
 
     # Generate an edge_index object and the associated restriction maps
     edge_index, maps = build_restriction_maps(graph, K, Delta)
@@ -150,19 +155,9 @@ def test_dirichlet_energy(graph_id, K, augmented):
     nL = build_norm_sheaf_laplacian(N, K, edge_index, maps, augmented=augmented)
 
     # Compute the dirichlet energy
-    f = torch.FloatTensor(size=(N*K, 1)).uniform_(-1.0, 1.0)
-    energy_from_sparse = dirichlet_energy(nL, f, size=N*K)
+    f = torch.FloatTensor(size=(N * K, 1)).uniform_(-1.0, 1.0)
+    energy_from_sparse = dirichlet_energy(nL, f, size=N * K)
     energy_from_dense = f.t() @ nL_dense @ f
 
     assert energy_from_sparse > -1e-10
     assert abs(energy_from_dense - energy_from_sparse) < 1e-5
-
-
-
-
-
-
-
-
-
-

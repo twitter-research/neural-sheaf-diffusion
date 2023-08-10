@@ -32,9 +32,3 @@ def test_local_concat_learner(graph_id, in_channels, d):
     maps = model(data.x, data.edge_index)
 
     assert list(maps.size()) == [data.edge_index.size(1), d**2]
-
-
-
-
-
-

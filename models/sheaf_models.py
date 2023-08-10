@@ -13,6 +13,7 @@ from lib import laplace as lap
 
 class SheafLearner(nn.Module):
     """Base model that learns a sheaf from the features and the graph structure."""
+
     def __init__(self):
         super(SheafLearner, self).__init__()
         self.L = None
@@ -32,13 +33,13 @@ class LocalConcatSheafLearner(SheafLearner):
         super(LocalConcatSheafLearner, self).__init__()
         assert len(out_shape) in [1, 2]
         self.out_shape = out_shape
-        self.linear1 = torch.nn.Linear(in_channels*2, int(np.prod(out_shape)), bias=False)
+        self.linear1 = torch.nn.Linear(in_channels * 2, int(np.prod(out_shape)), bias=False)
 
-        if sheaf_act == 'id':
+        if sheaf_act == "id":
             self.act = lambda x: x
-        elif sheaf_act == 'tanh':
+        elif sheaf_act == "tanh":
             self.act = torch.tanh
-        elif sheaf_act == 'elu':
+        elif sheaf_act == "elu":
             self.act = F.elu
         else:
             raise ValueError(f"Unsupported act {sheaf_act}")
@@ -77,11 +78,11 @@ class LocalConcatSheafLearnerVariant(SheafLearner):
         # nn.init.normal_(self.linear1.weight, 0.0, std1)
         # nn.init.normal_(self.linear2.weight, 0.0, std2)
 
-        if sheaf_act == 'id':
+        if sheaf_act == "id":
             self.act = lambda x: x
-        elif sheaf_act == 'tanh':
+        elif sheaf_act == "tanh":
             self.act = torch.tanh
-        elif sheaf_act == 'elu':
+        elif sheaf_act == "elu":
             self.act = F.elu
         else:
             raise ValueError(f"Unsupported act {sheaf_act}")
@@ -109,11 +110,10 @@ class LocalConcatSheafLearnerVariant(SheafLearner):
 
 
 class AttentionSheafLearner(SheafLearner):
-
     def __init__(self, in_channels, d):
         super(AttentionSheafLearner, self).__init__()
         self.d = d
-        self.linear1 = torch.nn.Linear(in_channels*2, d**2, bias=False)
+        self.linear1 = torch.nn.Linear(in_channels * 2, d**2, bias=False)
 
     def forward(self, x, edge_index):
         row, col = edge_index
@@ -131,7 +131,7 @@ class EdgeWeightLearner(SheafLearner):
     def __init__(self, in_channels: int, edge_index):
         super(EdgeWeightLearner, self).__init__()
         self.in_channels = in_channels
-        self.linear1 = torch.nn.Linear(in_channels*2, 1, bias=False)
+        self.linear1 = torch.nn.Linear(in_channels * 2, 1, bias=False)
         self.full_left_right_idx, _ = lap.compute_left_right_map_index(edge_index, full_matrix=True)
 
     def forward(self, x, edge_index):
@@ -171,4 +171,3 @@ class QuadraticFormSheafLearner(SheafLearner):
             return torch.tanh(maps).view(-1, self.out_shape[0], self.out_shape[1])
         else:
             return torch.tanh(maps).view(-1, self.out_shape[0])
-

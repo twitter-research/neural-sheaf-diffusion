@@ -26,7 +26,7 @@ class PosEncTests(unittest.TestCase):
         class test_dataset:
             def __init__(self, data):
                 self.data = data
-                self.name = 'TestData'
+                self.name = "TestData"
 
         class test_data:
             def __init__(self, edge_index, x):
@@ -42,7 +42,7 @@ class PosEncTests(unittest.TestCase):
         self.assertTrue(dataset.data.x.shape == (3, 2 + k))
 
     def test_get_laplacian_evectors_on_texas(self):
-        dataset = get_dataset('texas')
+        dataset = get_dataset("texas")
         A = to_scipy_sparse_matrix(dataset.data.edge_index)
         diag = csr_matrix.diagonal(A.tocsr())
         self.assertTrue(diag.sum() == 0)
@@ -54,7 +54,7 @@ class PosEncTests(unittest.TestCase):
         self.assertAlmostEqual(eigenvalues[0], 0, places=4)
 
     def test_append_evector_on_texas(self):
-        dataset = get_dataset('texas')
+        dataset = get_dataset("texas")
         n_nodes, n_features = dataset.data.x.shape
         k = 0
         dataset = append_top_k_evectors(dataset, k=k)

@@ -17,10 +17,13 @@ from torch_geometric.utils import remove_self_loops
 
 
 class Planetoid(InMemoryDataset):
-
-    def __init__(self, root: str, name: str,
-                 transform: Optional[Callable] = None,
-                 pre_transform: Optional[Callable] = None):
+    def __init__(
+        self,
+        root: str,
+        name: str,
+        transform: Optional[Callable] = None,
+        pre_transform: Optional[Callable] = None,
+    ):
         self.name = name
 
         super().__init__(root, transform, pre_transform)
@@ -31,20 +34,20 @@ class Planetoid(InMemoryDataset):
 
     @property
     def raw_dir(self) -> str:
-        return osp.join(self.root, self.name, 'raw')
+        return osp.join(self.root, self.name, "raw")
 
     @property
     def processed_dir(self) -> str:
-        return osp.join(self.root, self.name, 'processed')
+        return osp.join(self.root, self.name, "processed")
 
     @property
     def raw_file_names(self) -> List[str]:
-        names = ['x', 'tx', 'allx', 'y', 'ty', 'ally', 'graph', 'test.index']
-        return [f'ind.{self.name.lower()}.{name}' for name in names]
+        names = ["x", "tx", "allx", "y", "ty", "ally", "graph", "test.index"]
+        return [f"ind.{self.name.lower()}.{name}" for name in names]
 
     @property
     def processed_file_names(self) -> str:
-        return 'data.pt'
+        return "data.pt"
 
     def download(self):
         pass
@@ -55,7 +58,7 @@ class Planetoid(InMemoryDataset):
         torch.save(self.collate([data]), self.processed_paths[0])
 
     def __repr__(self) -> str:
-        return f'{self.name}()'
+        return f"{self.name}()"
 
 
 def parse_index_file(filename):
@@ -71,13 +74,13 @@ def parse_index_file(filename):
 
 def full_load_citation(dataset_str, raw_dir):
     """Code adapted from https://github.com/Yujun-Yan/Heterophily_and_oversmoothing/blob/main/process.py#L33"""
-    names = ['x', 'y', 'tx', 'ty', 'allx', 'ally', 'graph']
+    names = ["x", "y", "tx", "ty", "allx", "ally", "graph"]
     objects = []
     for i in range(len(names)):
         path = osp.join(raw_dir, "ind.{}.{}".format(dataset_str, names[i]))
-        with open(path, 'rb') as f:
+        with open(path, "rb") as f:
             if sys.version_info > (3, 0):
-                objects.append(pkl.load(f, encoding='latin1'))
+                objects.append(pkl.load(f, encoding="latin1"))
             else:
                 objects.append(pkl.load(f))
 
@@ -120,11 +123,16 @@ def full_load_citation(dataset_str, raw_dir):
     # Make the graph undirected
     edge_index = to_undirected(edge_index)
 
-    assert (np.array_equal(np.unique(labels), np.arange(len(np.unique(labels)))))
+    assert np.array_equal(np.unique(labels), np.arange(len(np.unique(labels))))
 
     features = torch.FloatTensor(features)
     labels = torch.LongTensor(labels)
     non_valid_samples = torch.LongTensor(non_valid_samples)
 
-    return Data(x=features, edge_index=edge_index, y=labels, num_node_features=features.size(1),
-                non_valid_samples=non_valid_samples)
+    return Data(
+        x=features,
+        edge_index=edge_index,
+        y=labels,
+        num_node_features=features.size(1),
+        non_valid_samples=non_valid_samples,
+    )
