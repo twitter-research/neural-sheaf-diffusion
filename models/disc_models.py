@@ -114,7 +114,9 @@ class DiscreteDiagSheafDiffusion(SheafDiffusion):
 
         x = x.reshape(self.graph_size, -1)
         x = self.lin2(x)
-        return F.log_softmax(x, dim=1)
+
+        # return F.log_softmax(x, dim=1)
+        return x
 
 
 class DiscreteBundleSheafDiffusion(SheafDiffusion):
@@ -262,7 +264,8 @@ class DiscreteBundleSheafDiffusion(SheafDiffusion):
         x = x.reshape(self.graph_size, -1)
         x = self.lin2(x)
 
-        return F.log_softmax(x, dim=1)
+        # return F.log_softmax(x, dim=1)
+        return x
 
 
 class DiscreteGeneralSheafDiffusion(SheafDiffusion):
@@ -388,4 +391,5 @@ class DiscreteGeneralSheafDiffusion(SheafDiffusion):
         x = x.reshape(self.graph_size, -1)
         x = self.lin2(x)
 
-        return F.log_softmax(x, dim=1)
+        # return F.log_softmax(x, dim=1)
+        return x

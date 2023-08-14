@@ -284,8 +284,9 @@ class DiagSheafDiffusion(SheafDiffusion):
             x = self.odeblock(x)
         x = x.view(self.graph_size, -1)
         x = self.lin2(x)
-        return F.log_softmax(x, dim=1)
 
+        # return F.log_softmax(x, dim=1)
+        return x
 
 class BundleSheafDiffusion(SheafDiffusion):
     """Performs diffusion using a sheaf Laplacian with diagonal restriction maps."""
@@ -357,7 +358,8 @@ class BundleSheafDiffusion(SheafDiffusion):
         x = x.view(self.graph_size, -1)
         x = self.lin2(x)
 
-        return F.log_softmax(x, dim=1)
+        # return F.log_softmax(x, dim=1)
+        return x
 
 
 class GeneralSheafDiffusion(SheafDiffusion):
@@ -421,4 +423,5 @@ class GeneralSheafDiffusion(SheafDiffusion):
         x = x.view(self.graph_size, -1)
         x = self.lin2(x)
 
-        return F.log_softmax(x, dim=1)
+        #return F.log_softmax(x, dim=1)
+        return x
