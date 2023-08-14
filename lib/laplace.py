@@ -319,20 +319,25 @@ def append_diag_maps_to_existent_laplacian(size, learnable_d, L, edge_index, val
 
 
 def compute_left_right_map_index(edge_index, full_matrix=False):
-    """Computes indices for lower triangular matrix or full matrix"""
-    edge_to_idx = dict()
+    """Computes indices for lower triangular matrix or full matrix
+    left_right_index = map two edges that correspond to the same pair of nodes
+    (we map edge indices in `edge_index`)
+    new_edge_index = corresponding pair of nodes for each edge mapping in `left_right_index`
+    """
+
+    edge_to_idx = dict()  # (node_src, node_trg) -> egde idx
     for e in range(edge_index.size(1)):
         source = edge_index[0, e].item()
         target = edge_index[1, e].item()
         edge_to_idx[(source, target)] = e
 
     left_index, right_index = [], []
-    row, col = [], []
+    row, col = [], []  # source, target
     for e in range(edge_index.size(1)):
         source = edge_index[0, e].item()
         target = edge_index[1, e].item()
         if source < target or full_matrix:
-            left_index.append(e)
+            left_index.append(e)  # edge idx
             right_index.append(edge_to_idx[(target, source)])
 
             row.append(source)
@@ -428,6 +433,7 @@ def batched_sym_matrix_pow(matrices: torch.Tensor, p: float) -> torch.Tensor:
     good = vals > vals.max(-1, True).values * vals.size(-1) * torch.finfo(vals.dtype).eps
     vals = vals.pow(p).where(good, torch.zeros((), device=matrices.device, dtype=matrices.dtype))
     matrix_power = (vecs * vals.unsqueeze(-2)) @ torch.transpose(vecs, -2, -1)
+
     return matrix_power
 
 

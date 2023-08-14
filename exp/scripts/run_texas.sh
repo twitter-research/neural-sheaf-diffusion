@@ -12,7 +12,7 @@ python -m exp.run \
     --input_dropout=0.0 \
     --dropout=0.7 \
     --use_act=True \
-    --model=BundleSheaf \
+    --model=GeneralSheaf \
     --normalised=True \
     --sparse_learner=True \
     --entity="${ENTITY}"

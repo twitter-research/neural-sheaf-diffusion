@@ -37,10 +37,16 @@ def reset_wandb_env():
             del os.environ[k]
 
 
-def train(model, optimizer, data):
+def train(model, optimizer, data) -> None:
+    """train model on train data"""
+
     model.train()
     optimizer.zero_grad()
+
+    # run inference on the whole graph; select only train part for training
     out = model(data.x)[data.train_mask]
+
+    # run nllloss
     nll = F.nll_loss(out, data.y[data.train_mask])
     loss = nll
     loss.backward()
@@ -50,29 +56,42 @@ def train(model, optimizer, data):
 
 
 def test(model, data):
+    """Compute metrics on all subsets (train, val, test)"""
+
     model.eval()
     with torch.no_grad():
         logits, accs, losses, preds = model(data.x), [], [], []
         for _, mask in data("train_mask", "val_mask", "test_mask"):
+            # get class labels from logits
             pred = logits[mask].max(1)[1]
+
+            # compute acc
             acc = pred.eq(data.y[mask]).sum().item() / mask.sum().item()
 
+            # recompute loss
             loss = F.nll_loss(logits[mask], data.y[mask])
 
             preds.append(pred.detach().cpu())
             accs.append(acc)
             losses.append(loss.detach().cpu())
+
         return accs, preds, losses
 
 
-def run_exp(args, dataset, model_cls, fold):
+def run_exp(args, dataset, model_cls, fold: int):
+    """Run training on one fold (split)"""
+
+    # dataset contains only one graph
     data = dataset[0]
+    # load split sample indices; save it to data as attrs
     data = get_fixed_splits(data, args["dataset"], fold)
     data = data.to(args["device"])
 
+    # init model
     model = model_cls(data.edge_index, args)
     model = model.to(args["device"])
 
+    # get parameter groups, init optimizer
     sheaf_learner_params, other_params = model.grouped_parameters()
     optimizer = torch.optim.Adam(
         [
@@ -90,9 +109,11 @@ def run_exp(args, dataset, model_cls, fold):
     best_epoch = 0
     bad_counter = 0
 
+    # run training for a specified num of epochs
     for epoch in range(args["epochs"]):
         train(model, optimizer, data)
 
+        # get accuracy, predictions, loss value
         [train_acc, val_acc, tmp_test_acc], preds, [train_loss, val_loss, tmp_test_loss] = test(
             model, data
         )
@@ -173,12 +194,13 @@ if __name__ == "__main__":
     if args.evectors > 0:
         dataset = append_top_k_evectors(dataset, args.evectors)
 
-    # Add extra arguments
+    # Add extra arguments: graph_size, num_features, num_classes, device
     args.sha = sha
     args.graph_size = dataset[0].x.size(0)
     args.input_dim = dataset.num_features
     args.output_dim = dataset.num_classes
     args.device = torch.device(f"cuda:{args.cuda}" if torch.cuda.is_available() else "cpu")
+
     assert args.normalised or args.deg_normalised
     if args.sheaf_decay is None:
         args.sheaf_decay = args.weight_decay
@@ -195,6 +217,7 @@ if __name__ == "__main__":
     print(args)
     wandb.init(project="sheaf", config=vars(args), entity=args.entity)
 
+    # run training for each fold
     for fold in tqdm(range(args.folds)):
         test_acc, best_val_acc, keep_running = run_exp(wandb.config, dataset, model_cls, fold)
         results.append([test_acc, best_val_acc])

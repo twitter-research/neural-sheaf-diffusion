@@ -32,8 +32,11 @@ class SheafDiffusion(nn.Module):
         self.nonlinear = not args["linear"]
         self.input_dropout = args["input_dropout"]
         self.dropout = args["dropout"]
+
+        # use left and right weights
         self.left_weights = args["left_weights"]
         self.right_weights = args["right_weights"]
+
         self.sparse_learner = args["sparse_learner"]
         self.use_act = args["use_act"]
         self.input_dim = args["input_dim"]
@@ -50,6 +53,7 @@ class SheafDiffusion(nn.Module):
 
     def update_edge_index(self, edge_index):
         assert edge_index.max() <= self.graph_size
+
         self.edge_index = edge_index
         self.laplacian_builder = self.laplacian_builder.create_with_new_edge_index(edge_index)
 
@@ -60,6 +64,8 @@ class SheafDiffusion(nn.Module):
                 sheaf_learners.append(param)
             else:
                 others.append(param)
+
         assert len(sheaf_learners) > 0
         assert len(sheaf_learners) + len(others) == len(list(self.parameters()))
+
         return sheaf_learners, others

@@ -16,6 +16,7 @@ def str2bool(x):
 
 def get_parser():
     parser = argparse.ArgumentParser()
+
     # Optimisation params
     parser.add_argument("--epochs", type=int, default=1500)
     parser.add_argument("--lr", type=float, default=0.01)
@@ -189,4 +190,5 @@ def get_parser():
         help="Maximum number steps for the dopri5Early test integrator. "
         "used if getting OOM errors at test time",
     )
+
     return parser

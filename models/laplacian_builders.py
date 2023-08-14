@@ -27,10 +27,12 @@ class LaplacianBuilder(nn.Module):
 
         self.d = d
         self.final_d = d
+
         if add_hp:
             self.final_d += 1
         if add_lp:
             self.final_d += 1
+
         self.size = size
         self.edges = edge_index.size(1) // 2
         self.edge_index = edge_index
@@ -42,8 +44,14 @@ class LaplacianBuilder(nn.Module):
         self.augmented = augmented
 
         # Preprocess the sparse indices required to compute the Sheaf Laplacian.
+
+        # mapping of edges corresponding to the same pair of nodes (with "mirrored" edge pairs)
         self.full_left_right_idx, _ = lap.compute_left_right_map_index(edge_index, full_matrix=True)
+
+        # unique mapping of edges corresponding to the same pair of nodes
+        # mapping of node idx to each edge in `self.left_right_idx``
         self.left_right_idx, self.vertex_tril_idx = lap.compute_left_right_map_index(edge_index)
+
         if self.add_lp or self.add_hp:
             (
                 self.fixed_diag_indices,
@@ -51,6 +59,8 @@ class LaplacianBuilder(nn.Module):
             ) = lap.compute_fixed_diag_laplacian_indices(
                 size, self.vertex_tril_idx, self.d, self.final_d
             )
+
+        # compute degree matrix
         self.deg = degree(self.edge_index[0], num_nodes=self.size)
 
     def get_fixed_maps(self, size, dtype):
@@ -274,6 +284,7 @@ class NormConnectionLaplacianBuilder(LaplacianBuilder):
         if edge_weights is not None:
             assert edge_weights.size(1) == 1
         assert len(map_params.size()) == 2
+
         if self.orth_map in ["matrix_exp", "cayley"]:
             assert map_params.size(1) == self.d * (self.d + 1) // 2
         else:
@@ -324,18 +335,20 @@ class NormConnectionLaplacianBuilder(LaplacianBuilder):
 
 
 class GeneralLaplacianBuilder(LaplacianBuilder):
-    """Learns a multi-dimensional Sheaf Laplacian from data."""
+    """Learns a multi-dimensional Sheaf Laplacian from data.
+    (Stores an original graph size and an original edge_index)
+    """
 
     def __init__(
         self,
-        size,
+        size,  # graph size
         edge_index,
         d,
         normalised=False,
         deg_normalised=False,
         add_hp=False,
         add_lp=False,
-        augmented=True,
+        augmented=True,  # add I to D
     ):
         super(GeneralLaplacianBuilder, self).__init__(
             size,
@@ -349,6 +362,7 @@ class GeneralLaplacianBuilder(LaplacianBuilder):
         )
 
         # Preprocess the sparse indices required to compute the Sheaf Laplacian.
+        # (diagonal and tril blocks indices)
         self.diag_indices, self.tril_indices = lap.compute_learnable_laplacian_indices(
             size, self.vertex_tril_idx, self.d, self.final_d
         )
@@ -389,17 +403,27 @@ class GeneralLaplacianBuilder(LaplacianBuilder):
         return diag_maps, non_diag_maps
 
     def forward(self, maps):
+        # left and right edge indices
         left_idx, right_idx = self.left_right_idx
+
+        # vertex idx for each edge
         tril_row, tril_col = self.vertex_tril_idx
+
+        # block indices
         tril_indices, diag_indices = self.tril_indices, self.diag_indices
         row, _ = self.edge_index
 
         # Compute transport maps.
         assert torch.all(torch.isfinite(maps))
+        # select operator matrices for each edge idx
         left_maps = torch.index_select(maps, index=left_idx, dim=0)
         right_maps = torch.index_select(maps, index=right_idx, dim=0)
+
+        # compute tril maps by mm each left matrix w/ corresponding right
         tril_maps = -torch.bmm(torch.transpose(left_maps, dim0=-1, dim1=-2), right_maps)
+        # save tril maps
         saved_tril_maps = tril_maps.detach().clone()
+
         diag_maps = torch.bmm(torch.transpose(maps, dim0=-1, dim1=-2), maps)
         diag_maps = scatter_add(diag_maps, row, dim=0, dim_size=self.size)
 

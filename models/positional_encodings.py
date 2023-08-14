@@ -63,6 +63,7 @@ def append_top_k_evectors(dataset, k=2):
     # _, eigenvectors = get_laplacian_evectors(A, k + 1)
     data.x = torch.cat([data.x, torch.from_numpy(eigenvectors[:, :k])], dim=1)
     dataset.data = data
+
     return dataset
 
 
@@ -70,6 +71,7 @@ def get_laplacian_evectors(A, k):
     degree_mat = diags(np.squeeze(np.asarray(A.sum(axis=1))))
     L = degree_mat - A
     eigenvalues, eigenvectors = linalg.eigsh(L, which="SA", k=k)
+
     return eigenvalues, eigenvectors
 
 

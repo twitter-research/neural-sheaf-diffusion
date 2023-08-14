@@ -76,11 +76,17 @@ def test_permutation_equivariance_of_graph_laplacian_difussion(adjoint):
     # Construct the model
     for i in range(perms):
         with torch.no_grad():
+            # init model
             model = GraphLaplacianDiffusion(data.edge_index, args)
             model.eval()
+
+            # run diffusion
             out = model(data.x)
+
+            # apply perm matrix
             out = torch.FloatTensor(Ps[i] @ out.numpy())
 
+            # permute the graph; update edge_index in model; run diffusion again
             perm_data = permute_graph(data.clone(), Ps[i])
             model.update_edge_index(perm_data.edge_index)
             perm_out = model(perm_data.x)

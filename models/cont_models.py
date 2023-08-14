@@ -18,12 +18,12 @@ class LaplacianODEFunc(nn.Module):
 
     def __init__(
         self,
-        d,
+        d,  # final_d
         sheaf_learner,
         laplacian_builder,
         edge_index,
-        graph_size,
-        hidden_channels,
+        graph_size,  # num nodes
+        hidden_channels,  # number of feature channels (f)
         left_weights=False,
         right_weights=False,
         use_act=False,
@@ -46,10 +46,13 @@ class LaplacianODEFunc(nn.Module):
         self.left_weights = left_weights
         self.right_weights = right_weights
         self.use_act = use_act
+        # cache for the sheaf laplacian matrix
         self.L = None
 
+        # W_1 (reweights stalk embeddings)
         if self.left_weights:
             self.lin_left_weights = nn.Linear(self.d, self.d, bias=False)
+        # W_2 (controls channel numbers)
         if self.right_weights:
             self.lin_right_weights = nn.Linear(
                 self.hidden_channels, self.hidden_channels, bias=False
@@ -60,20 +63,26 @@ class LaplacianODEFunc(nn.Module):
         self.laplacian_builder = laplacian_builder
 
     def forward(self, t, x):
+        # Update the laplacian at each step.
         if self.nonlinear or self.L is None:
-            # Update the laplacian at each step.
+            # -> (n, d*f)
             x_maps = x.view(self.graph_size, -1)
+
+            # build restriction maps
             maps = self.sheaf_learner(x_maps, self.edge_index)
+
+            # compute edge weights
             if self.weight_learner is not None:
                 edge_weights = self.weight_learner(x_maps, self.edge_index)
                 L, _ = self.laplacian_builder(maps, edge_weights)
             else:
                 L, _ = self.laplacian_builder(maps)
             self.L = L
+        # Cache the Laplacian obtained at the first layer for the rest of the integration.
         else:
-            # Cache the Laplacian obtained at the first layer for the rest of the integration.
             L = self.L
 
+        # apply left and right weights to features
         if self.left_weights:
             x = x.t().reshape(-1, self.d)
             x = self.lin_left_weights(x)
@@ -91,12 +100,14 @@ class LaplacianODEFunc(nn.Module):
 
 
 class ODEBlock(nn.Module):
-    """Module performing the ODE Integration."""
+    """Module performing the ODE Integration.
+    (basically, a wrapper over `torchdiffeq.odeint`)
+    """
 
     def __init__(self, odefunc, t, opt):
         super(ODEBlock, self).__init__()
-        self.t = t
-        self.opt = opt
+        self.t = t  # == [0.0, self.t]
+        self.opt = opt  # == args
         self.odefunc = odefunc
         self.set_tol()
 
@@ -152,16 +163,21 @@ class GraphLaplacianDiffusion(SheafDiffusion):
         super(GraphLaplacianDiffusion, self).__init__(edge_index, args)
         assert args["d"] == 1
 
+        # linear layers
         self.lin1 = nn.Linear(self.input_dim, self.hidden_dim)
         if self.second_linear:
             self.lin12 = nn.Linear(self.hidden_dim, self.hidden_dim)
         self.lin2 = nn.Linear(self.hidden_dim, self.output_dim)
 
+        # sheaf learner = here, just learns edge weights from node features
         self.sheaf_learner = EdgeWeightLearner(self.hidden_dim, edge_index)
+
+        # laplacian builder
         self.laplacian_builder = lb.DiagLaplacianBuilder(
             self.graph_size, edge_index, d=self.d, add_hp=self.add_hp, add_lp=self.add_lp
         )
 
+        # odefunc defines our dy/dt
         self.odefunc = LaplacianODEFunc(
             self.final_d,
             self.sheaf_learner,
@@ -174,6 +190,7 @@ class GraphLaplacianDiffusion(SheafDiffusion):
             right_weights=self.right_weights,
             use_act=self.use_act,
         )
+        # time_range: [0.0, max_t]
         self.odeblock = ODEBlock(self.odefunc, self.time_range, args)
 
     def update_edge_index(self, edge_index):
@@ -182,19 +199,32 @@ class GraphLaplacianDiffusion(SheafDiffusion):
         self.sheaf_learner.update_edge_index(edge_index)
 
     def forward(self, x):
+        """x: node features"""
+
         x = F.dropout(x, p=self.input_dropout, training=self.training)
+
+        # input dim -> hidden_dim
         x = self.lin1(x)
         if self.use_act:
             x = F.elu(x)
         x = F.dropout(x, p=self.dropout, training=self.training)
+
+        # second hidden layer
         if self.second_linear:
             x = self.lin12(x)
 
-        if self.t > 0:
+        if self.t > 0:  # integrate ODE
+            # -> (nd, f)
             x = x.view(self.graph_size * self.final_d, -1)
+            # integrate -> get `x_i` from `x_0 = x`
             x = self.odeblock(x)
+
+        # -> (n, d*f)
         x = x.view(self.graph_size, -1)
+
+        # output layer
         x = self.lin2(x)
+
         return F.log_softmax(x, dim=1)
 
 
@@ -323,8 +353,10 @@ class BundleSheafDiffusion(SheafDiffusion):
         if self.t > 0:
             x = x.view(self.graph_size * self.final_d, -1)
             x = self.odeblock(x)
+
         x = x.view(self.graph_size, -1)
         x = self.lin2(x)
+
         return F.log_softmax(x, dim=1)
 
 
@@ -388,4 +420,5 @@ class GeneralSheafDiffusion(SheafDiffusion):
 
         x = x.view(self.graph_size, -1)
         x = self.lin2(x)
+
         return F.log_softmax(x, dim=1)

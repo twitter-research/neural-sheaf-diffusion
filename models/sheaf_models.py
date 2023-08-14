@@ -31,7 +31,7 @@ class LocalConcatSheafLearner(SheafLearner):
 
     def __init__(self, in_channels: int, out_shape: Tuple[int, ...], sheaf_act="tanh"):
         super(LocalConcatSheafLearner, self).__init__()
-        assert len(out_shape) in [1, 2]
+        assert len(out_shape) in [1, 2]  # (d, d) or (d * (d-1) // 2, )
         self.out_shape = out_shape
         self.linear1 = torch.nn.Linear(in_channels * 2, int(np.prod(out_shape)), bias=False)
 
@@ -46,14 +46,19 @@ class LocalConcatSheafLearner(SheafLearner):
 
     def forward(self, x, edge_index):
         row, col = edge_index
+
+        # select node features for all sources and targets
         x_row = torch.index_select(x, dim=0, index=row)
         x_col = torch.index_select(x, dim=0, index=col)
+
+        # concat node features, pass thru a linear layer, apply an act func
         maps = self.linear1(torch.cat([x_row, x_col], dim=1))
         maps = self.act(maps)
 
         # sign = maps.sign()
         # maps = maps.abs().clamp(0.05, 1.0) * sign
 
+        # reshape to out_shape
         if len(self.out_shape) == 2:
             return maps.view(-1, self.out_shape[0], self.out_shape[1])
         else:
@@ -135,15 +140,20 @@ class EdgeWeightLearner(SheafLearner):
         self.full_left_right_idx, _ = lap.compute_left_right_map_index(edge_index, full_matrix=True)
 
     def forward(self, x, edge_index):
+        # get edge indices
         _, full_right_idx = self.full_left_right_idx
 
         row, col = edge_index
+
+        # get node feature vectors for each edge
         x_row = torch.index_select(x, dim=0, index=row)
         x_col = torch.index_select(x, dim=0, index=col)
+
         weights = self.linear1(torch.cat([x_row, x_col], dim=1))
         weights = torch.sigmoid(weights)
 
         edge_weights = weights * torch.index_select(weights, index=full_right_idx, dim=0)
+
         return edge_weights
 
     def update_edge_index(self, edge_index):
