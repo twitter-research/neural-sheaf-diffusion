@@ -11,7 +11,7 @@ from torch_sparse import SparseTensor, coalesce
 from torch_geometric.data import InMemoryDataset, download_url, Data
 from torch_geometric.utils.undirected import to_undirected
 from torch_geometric.utils import remove_self_loops
-from utils.classic import Planetoid
+from nsd.utils.classic import Planetoid
 from definitions import ROOT_DIR
 
 

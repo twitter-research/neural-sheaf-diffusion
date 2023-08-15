@@ -6,10 +6,10 @@ import numpy as np
 import torch
 
 from torch import tensor
-from models.positional_encodings import append_top_k_evectors, get_laplacian_evectors
+from nsd.models.positional_encodings import append_top_k_evectors, get_laplacian_evectors
 from torch_geometric.utils import to_scipy_sparse_matrix
 from scipy.sparse import csr_matrix
-from utils.heterophilic import get_dataset
+from nsd.utils.heterophilic import get_dataset
 
 
 class PosEncTests(unittest.TestCase):

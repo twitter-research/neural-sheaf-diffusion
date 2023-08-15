@@ -7,7 +7,7 @@ import numpy as np
 import networkx as nx
 
 from scipy import linalg
-from lib.laplace import (
+from nsd.lib.laplace import (
     build_sheaf_laplacian,
     build_norm_sheaf_laplacian,
     build_sheaf_difussion_matrix,

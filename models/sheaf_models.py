@@ -8,7 +8,7 @@ import numpy as np
 from typing import Tuple
 from abc import abstractmethod
 from torch import nn
-from lib import laplace as lap
+from nsd.lib import laplace as lap
 
 
 class SheafLearner(nn.Module):

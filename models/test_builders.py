@@ -5,16 +5,16 @@ import torch
 import pytest
 import numpy as np
 import networkx as nx
-import lib.laplace as lap
+import nsd.lib.laplace as lap
 
-from models.laplacian_builders import (
+from nsd.models.laplacian_builders import (
     DiagLaplacianBuilder,
     GeneralLaplacianBuilder,
     NormConnectionLaplacianBuilder,
 )
 from torch_geometric.utils import from_networkx
-from lib.laplace import build_dense_laplacian
-from utils.heterophilic import get_dataset
+from nsd.lib.laplace import build_dense_laplacian
+from nsd.utils.heterophilic import get_dataset
 
 
 @pytest.mark.parametrize(

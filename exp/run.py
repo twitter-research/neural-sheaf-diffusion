@@ -15,15 +15,15 @@ from tqdm import tqdm
 # This is required here by wandb sweeps.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from exp.parser import get_parser
-from models.positional_encodings import append_top_k_evectors
-from models.cont_models import DiagSheafDiffusion, BundleSheafDiffusion, GeneralSheafDiffusion
-from models.disc_models import (
+from nsd.exp.parser import get_parser
+from nsd.models.positional_encodings import append_top_k_evectors
+from nsd.models.cont_models import DiagSheafDiffusion, BundleSheafDiffusion, GeneralSheafDiffusion
+from nsd.models.disc_models import (
     DiscreteDiagSheafDiffusion,
     DiscreteBundleSheafDiffusion,
     DiscreteGeneralSheafDiffusion,
 )
-from utils.heterophilic import get_dataset, get_fixed_splits
+from nsd.utils.heterophilic import get_dataset, get_fixed_splits
 
 
 def reset_wandb_env():

@@ -6,9 +6,9 @@ import torch.nn.functional as F
 import torch_sparse
 
 from torch import nn
-from models.sheaf_base import SheafDiffusion
-from models import laplacian_builders as lb
-from models.sheaf_models import (
+from nsd.models.sheaf_base import SheafDiffusion
+from nsd.models import laplacian_builders as lb
+from nsd.models.sheaf_models import (
     LocalConcatSheafLearner,
     EdgeWeightLearner,
     LocalConcatSheafLearnerVariant,

@@ -7,14 +7,14 @@ import numpy as np
 import networkx as nx
 import torch.nn.functional as F
 
-from lib.perm_utils import generate_permutation_matrices, permute_graph
-from models.disc_models import (
+from nsd.lib.perm_utils import generate_permutation_matrices, permute_graph
+from nsd.models.disc_models import (
     DiscreteDiagSheafDiffusion,
     DiscreteBundleSheafDiffusion,
     DiscreteGeneralSheafDiffusion,
 )
 from torch_geometric.utils import from_networkx
-from utils.heterophilic import get_dataset
+from nsd.utils.heterophilic import get_dataset
 
 
 def get_test_config():

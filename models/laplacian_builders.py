@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import torch
-import lib.laplace as lap
+import nsd.lib.laplace as lap
 
 from torch import nn
 from torch_scatter import scatter_add
 from torch_geometric.utils import degree
-from models.orthogonal import Orthogonal
+from nsd.models.orthogonal import Orthogonal
 
 
 class LaplacianBuilder(nn.Module):

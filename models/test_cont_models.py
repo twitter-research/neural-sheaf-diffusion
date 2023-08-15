@@ -7,9 +7,9 @@ import numpy as np
 import networkx as nx
 import torch.nn.functional as F
 
-from lib.perm_utils import generate_permutation_matrices, permute_graph
-from utils.heterophilic import get_dataset
-from models.cont_models import (
+from nsd.lib.perm_utils import generate_permutation_matrices, permute_graph
+from nsd.utils.heterophilic import get_dataset
+from nsd.models.cont_models import (
     GraphLaplacianDiffusion,
     DiagSheafDiffusion,
     GeneralSheafDiffusion,

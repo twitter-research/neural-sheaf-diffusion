@@ -5,7 +5,7 @@ import torch
 import pytest
 import numpy as np
 
-from models.orthogonal import Orthogonal
+from nsd.models.orthogonal import Orthogonal
 
 
 @pytest.mark.parametrize(

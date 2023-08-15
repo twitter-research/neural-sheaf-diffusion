@@ -6,7 +6,7 @@ import pytest
 import numpy as np
 import networkx as nx
 
-from models.sheaf_models import LocalConcatSheafLearner
+from nsd.models.sheaf_models import LocalConcatSheafLearner
 from torch_geometric.utils import from_networkx
 
 
