@@ -181,6 +181,7 @@ class DiagLaplacianBuilder(LaplacianBuilder):
             left_norm, right_norm = deg_sqrt_inv[row], deg_sqrt_inv[col]
             tril = left_norm * tril * right_norm
             diag = deg_sqrt_inv * diag * deg_sqrt_inv
+
         return diag, tril
 
     def forward(self, maps):

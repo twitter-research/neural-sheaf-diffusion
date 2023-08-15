@@ -237,7 +237,8 @@ class DiagSheafDiffusion(SheafDiffusion):
         self.lin1 = nn.Linear(self.input_dim, self.hidden_dim)
         if self.second_linear:
             self.lin12 = nn.Linear(self.hidden_dim, self.hidden_dim)
-        self.lin2 = nn.Linear(self.hidden_dim, self.output_dim)
+        self.lin2 = nn.Linear(self.hidden_dim * self.graph_size, self.inter_dim)
+        self.final_lin = nn.Linear(self.inter_dim, self.output_dim)
 
         self.sheaf_learner = LocalConcatSheafLearner(
             self.hidden_dim, out_shape=(self.d,), sheaf_act=self.sheaf_act
@@ -270,7 +271,9 @@ class DiagSheafDiffusion(SheafDiffusion):
         super().update_edge_index(edge_index)
         self.odefunc.update_laplacian_builder(self.laplacian_builder)
 
-    def forward(self, x):
+    def forward(self, data):
+        x = data.x
+
         x = F.dropout(x, p=self.input_dropout, training=self.training)
         x = self.lin1(x)
         if self.use_act:
@@ -283,7 +286,13 @@ class DiagSheafDiffusion(SheafDiffusion):
             x = x.view(self.graph_size * self.final_d, -1)
             x = self.odeblock(x)
         x = x.view(self.graph_size, -1)
-        x = self.lin2(x)
+
+        # concat node embeddings
+        x = x.reshape(x.size(0) // self.graph_size, -1)
+
+        # 2-layer clf head
+        x = self.lin2(F.elu(x))
+        x = self.final_lin(F.elu(x))
 
         # return F.log_softmax(x, dim=1)
         return x
