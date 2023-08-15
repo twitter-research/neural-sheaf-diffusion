@@ -56,6 +56,8 @@ def get_parser():
         help="Whether to learn a new Laplacian at each step.",
     )
     parser.add_argument("--hidden_channels", type=int, default=20)
+    # intermediate dim in clf head
+    parser.add_argument("--inter_dim", type=int, default=256)
     parser.add_argument("--input_dropout", type=float, default=0.0)
     parser.add_argument("--dropout", type=float, default=0.0)
     parser.add_argument(
