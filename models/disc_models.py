@@ -71,9 +71,12 @@ class DiscreteDiagSheafDiffusion(SheafDiffusion):
         self.lin1 = nn.Linear(self.input_dim, self.hidden_dim)
         if self.second_linear:
             self.lin12 = nn.Linear(self.hidden_dim, self.hidden_dim)
-        self.lin2 = nn.Linear(self.hidden_dim, self.output_dim)
+        self.lin2 = nn.Linear(self.hidden_dim * self.graph_size, self.inter_dim)
+        self.final_lin = nn.Linear(self.inter_dim, self.output_dim)
 
-    def forward(self, x):
+    def forward(self, data):
+        x = data.x
+
         x = F.dropout(x, p=self.input_dropout, training=self.training)
         x = self.lin1(x)
         if self.use_act:
@@ -113,7 +116,13 @@ class DiscreteDiagSheafDiffusion(SheafDiffusion):
             x = x0
 
         x = x.reshape(self.graph_size, -1)
-        x = self.lin2(x)
+
+        # concat node embeddings
+        x = x.reshape(x.size(0) // self.graph_size, -1)
+
+        # 2-layer clf head
+        x = self.lin2(F.elu(x))
+        x = self.final_lin(F.elu(x))
 
         # return F.log_softmax(x, dim=1)
         return x
@@ -183,7 +192,8 @@ class DiscreteBundleSheafDiffusion(SheafDiffusion):
         self.lin1 = nn.Linear(self.input_dim, self.hidden_dim)
         if self.second_linear:
             self.lin12 = nn.Linear(self.hidden_dim, self.hidden_dim)
-        self.lin2 = nn.Linear(self.hidden_dim, self.output_dim)
+        self.lin2 = nn.Linear(self.hidden_dim * self.graph_size, self.inter_dim)
+        self.final_lin = nn.Linear(self.inter_dim, self.output_dim)
 
     def get_param_size(self):
         if self.orth_trans in ["matrix_exp", "cayley"]:
@@ -207,7 +217,9 @@ class DiscreteBundleSheafDiffusion(SheafDiffusion):
         for weight_learner in self.weight_learners:
             weight_learner.update_edge_index(edge_index)
 
-    def forward(self, x):
+    def forward(self, data):
+        x = data.x
+
         # map to hidden_channels * final_d
         x = F.dropout(x, p=self.input_dropout, training=self.training)
         x = self.lin1(x)
@@ -262,7 +274,13 @@ class DiscreteBundleSheafDiffusion(SheafDiffusion):
             x = x0
 
         x = x.reshape(self.graph_size, -1)
-        x = self.lin2(x)
+
+        # concat node embeddings
+        x = x.reshape(x.size(0) // self.graph_size, -1)
+
+        # 2-layer clf head
+        x = self.lin2(F.elu(x))
+        x = self.final_lin(F.elu(x))
 
         # return F.log_softmax(x, dim=1)
         return x
@@ -325,7 +343,8 @@ class DiscreteGeneralSheafDiffusion(SheafDiffusion):
         self.lin1 = nn.Linear(self.input_dim, self.hidden_dim)
         if self.second_linear:
             self.lin12 = nn.Linear(self.hidden_dim, self.hidden_dim)
-        self.lin2 = nn.Linear(self.hidden_dim, self.output_dim)
+        self.lin2 = nn.Linear(self.hidden_dim * self.graph_size, self.inter_dim)
+        self.final_lin = nn.Linear(self.inter_dim, self.output_dim)
 
     def left_right_linear(self, x, left, right):
         if self.left_weights:
@@ -338,7 +357,9 @@ class DiscreteGeneralSheafDiffusion(SheafDiffusion):
 
         return x
 
-    def forward(self, x):
+    def forward(self, data):
+        x = data.x
+
         x = F.dropout(x, p=self.input_dropout, training=self.training)
         x = self.lin1(x)
         if self.use_act:
@@ -389,7 +410,13 @@ class DiscreteGeneralSheafDiffusion(SheafDiffusion):
         assert torch.all(torch.isfinite(x))
 
         x = x.reshape(self.graph_size, -1)
-        x = self.lin2(x)
+
+        # concat node embeddings
+        x = x.reshape(x.size(0) // self.graph_size, -1)
+
+        # 2-layer clf head
+        x = self.lin2(F.elu(x))
+        x = self.final_lin(F.elu(x))
 
         # return F.log_softmax(x, dim=1)
         return x

@@ -297,6 +297,7 @@ class DiagSheafDiffusion(SheafDiffusion):
         # return F.log_softmax(x, dim=1)
         return x
 
+
 class BundleSheafDiffusion(SheafDiffusion):
     """Performs diffusion using a sheaf Laplacian with diagonal restriction maps."""
 
@@ -308,7 +309,8 @@ class BundleSheafDiffusion(SheafDiffusion):
         self.lin1 = nn.Linear(self.input_dim, self.hidden_dim)
         if self.second_linear:
             self.lin12 = nn.Linear(self.hidden_dim, self.hidden_dim)
-        self.lin2 = nn.Linear(self.hidden_dim, self.output_dim)
+        self.lin2 = nn.Linear(self.hidden_dim * self.graph_size, self.inter_dim)
+        self.final_lin = nn.Linear(self.inter_dim, self.output_dim)
 
         self.weight_learner = (
             EdgeWeightLearner(self.hidden_dim, edge_index) if self.use_edge_weights else None
@@ -351,7 +353,9 @@ class BundleSheafDiffusion(SheafDiffusion):
         else:
             return self.d * (self.d - 1) // 2
 
-    def forward(self, x):
+    def forward(self, data):
+        x = data.x
+
         x = F.dropout(x, p=self.input_dropout, training=self.training)
         x = self.lin1(x)
         if self.use_act:
@@ -365,7 +369,13 @@ class BundleSheafDiffusion(SheafDiffusion):
             x = self.odeblock(x)
 
         x = x.view(self.graph_size, -1)
-        x = self.lin2(x)
+
+        # concat node embeddings
+        x = x.reshape(x.size(0) // self.graph_size, -1)
+
+        # 2-layer clf head
+        x = self.lin2(F.elu(x))
+        x = self.final_lin(F.elu(x))
 
         # return F.log_softmax(x, dim=1)
         return x
@@ -380,7 +390,8 @@ class GeneralSheafDiffusion(SheafDiffusion):
         self.lin1 = nn.Linear(self.input_dim, self.hidden_dim)
         if self.second_linear:
             self.lin12 = nn.Linear(self.hidden_dim, self.hidden_dim)
-        self.lin2 = nn.Linear(self.hidden_dim, self.output_dim)
+        self.lin2 = nn.Linear(self.hidden_dim * self.graph_size, self.inter_dim)
+        self.final_lin = nn.Linear(self.inter_dim, self.output_dim)
 
         self.sheaf_learner = LocalConcatSheafLearner(
             self.hidden_dim, out_shape=(self.d, self.d), sheaf_act=self.sheaf_act
@@ -413,7 +424,9 @@ class GeneralSheafDiffusion(SheafDiffusion):
         super().update_edge_index(edge_index)
         self.odefunc.update_laplacian_builder(self.laplacian_builder)
 
-    def forward(self, x):
+    def forward(self, data):
+        x = data.x
+
         x = F.dropout(x, p=self.input_dropout, training=self.training)
         x = self.lin1(x)
         if self.use_act:
@@ -430,7 +443,13 @@ class GeneralSheafDiffusion(SheafDiffusion):
         assert torch.all(torch.isfinite(x))
 
         x = x.view(self.graph_size, -1)
-        x = self.lin2(x)
+
+        # concat node embeddings
+        x = x.reshape(x.size(0) // self.graph_size, -1)
+
+        # 2-layer clf head
+        x = self.lin2(F.elu(x))
+        x = self.final_lin(F.elu(x))
 
         #return F.log_softmax(x, dim=1)
         return x
