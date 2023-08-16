@@ -12,7 +12,7 @@ from torch_geometric.data import InMemoryDataset, download_url, Data
 from torch_geometric.utils.undirected import to_undirected
 from torch_geometric.utils import remove_self_loops
 from nsd.utils.classic import Planetoid
-from definitions import ROOT_DIR
+from nsd.definitions import ROOT_DIR
 
 
 class Actor(InMemoryDataset):
