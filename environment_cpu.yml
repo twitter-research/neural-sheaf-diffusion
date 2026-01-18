@@ -9,6 +9,7 @@ dependencies:
   - python=3.9.9
   - cpuonly
   - pytorch=1.11.0
+  - numpy<2
   - pip:
       - torch-householder==1.0.1
       - tqdm==4.62.3
